@@ -2,10 +2,9 @@
 Aqui es donde vamos a estar llamando todo
  */
 
-package HelpClasses;
+package SomeClasses;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
