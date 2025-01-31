@@ -40,7 +40,6 @@ public class FileFuncs {
 
 
 
-        // Ensure that something is returned even if there is an exception
     }
 
 

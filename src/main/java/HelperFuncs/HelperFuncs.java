@@ -2,7 +2,7 @@
 AQUI PONEMOS FUNCIONES QUE PUEDES AYUDAR PARA NO SATURAR LAS OTRAS CLASES
  */
 
-package SomeClasses;
+package HelperFuncs;
 
 public class HelperFuncs {
 

@@ -1,8 +1,11 @@
 /*
 Clase dedicada para la creacion de Categorias utilizando json
+
+todo Implementar que el admin pueda agregar categoria de articulos y subcategorias
+todo Implementar que el admin pueda referenciar un archivo txt para agregar productos al json
  */
 
-package SomeClasses;
+package Categorias;
 
 import org.json.JSONObject;
 

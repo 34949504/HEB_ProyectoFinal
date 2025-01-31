@@ -2,18 +2,19 @@
 Aqui es donde vamos a estar llamando todo
  */
 
-import SomeClasses.HelperFuncs;
+import HelperFuncs.HelperFuncs;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Menu {
+public class MenuPrincipal {
+
+    private HelperFuncs helperFuncs = new HelperFuncs();
 
     public int  menu()
     {
 
-        HelperFuncs helperFuncs = new HelperFuncs();
 
         Scanner scanner = new Scanner(System.in);
 

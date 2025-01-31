@@ -1,4 +1,4 @@
-import SomeClasses.CreadorCategorias;
+import Categorias.CreadorCategorias;
 import FileClasses.FileFuncs;
 
 
@@ -8,7 +8,7 @@ import java.io.File;
 public class Main {
     public static void main(String[] args) {
 
-        Menu _menu = new Menu();
+        MenuPrincipal _menu = new MenuPrincipal();
 
         _menu.menu();
 
