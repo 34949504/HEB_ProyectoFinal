@@ -1,6 +1,5 @@
-import HelpClasses.CreadorCategorias;
-import HelpClasses.FileFuncs;
-import HelpClasses.Menu;
+import SomeClasses.CreadorCategorias;
+import FileClasses.FileFuncs;
 
 
 import java.io.File;
@@ -14,7 +13,7 @@ public class Main {
         _menu.menu();
 
 
-        String fileName = "teta.json";
+        String fileName = "Jasons&files/Productos.json";
         FileFuncs fileFuncs = new FileFuncs();
 
         File file = fileFuncs.checkIfFileExists(fileName);

@@ -2,7 +2,7 @@
 Clase dedicada para la creacion de Categorias utilizando json
  */
 
-package HelpClasses;
+package SomeClasses;
 
 import org.json.JSONObject;
 

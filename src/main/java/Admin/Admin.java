@@ -5,13 +5,13 @@ Ejemplo
 Crear categorias
  */
 
-package HelpClasses;
+package Admin;
 
 public class Admin {
 
 
 
-    public
+
 
 
 

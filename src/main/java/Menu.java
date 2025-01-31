@@ -2,7 +2,7 @@
 Aqui es donde vamos a estar llamando todo
  */
 
-package SomeClasses;
+import SomeClasses.HelperFuncs;
 
 import java.util.ArrayList;
 import java.util.List;
