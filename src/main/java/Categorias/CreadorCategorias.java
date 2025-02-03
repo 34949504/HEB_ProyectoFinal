@@ -8,42 +8,57 @@ todo Implementar que el admin pueda referenciar un archivo txt para agregar prod
 package Categorias;
 
 import org.json.JSONObject;
-
 import java.util.Scanner;
+import java.util.Iterator;
+import FileClasses.FileFuncs;
+
+
 
 public class CreadorCategorias {
 
     private Scanner scanner = new Scanner(System.in);  // Create Scanner object
+    private FileFuncs fileFuncs = new FileFuncs();
+    private Categorias_helpFuncs categoriasHelpFuncs = new Categorias_helpFuncs();
 
 
 
-    public void CrearCategoriaPrincipal(String jsonText)
+    public void crearCategoriaPrincipal(JSONObject json)
     {
         System.out.println("Entra el nombre de la categoria:");
         String categoria = scanner.nextLine();
 
-        //if (jso)
+
+
+        if (categoriasHelpFuncs.checkIfkeyAlreadyExists(json,categoria))
+        {
+            System.out.println("Key "+categoria + " already exists" );
+        }
+        else
+        {
+            json.put(categoria,new JSONObject());
+            fileFuncs.writeFile(json.toString(4),"Jasons&files/Productos.json");
+            System.out.println("hi");
+        }
 
 
 
-        System.out.println("hola");
+
+
+
+        System.out.println(json.toString());
 
 
 
 
     }
 
-    public boolean checkifCategoriaExists(JSONObject json)
-    {
-        System.out.println("Entra el nombre de la categoria:");
-        return true;
 
-    }
+    /*
+    Nombre: checkIfkeyAlreadyExists
+    Funcion: Loopear keys de json y checar si la nueva key esta en el json
+    Return: True si hay igualdad, else falso
+     */
 
 
-    public boolean checkIfJasonEmpty(String str)
-    {
-        return str.length() <= 0;
-    }
 
 }

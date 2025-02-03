@@ -1,10 +1,15 @@
 package FileClasses;
 
-
+import java.io.FileWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
+
 import java.util.Scanner;
 import java.util.logging.Logger;
+
+
 
 
 
@@ -16,12 +21,14 @@ public class FileFuncs {
     private boolean DebugFlag = false;
 
 
-    /*
-    Nombre: ReadFile
-    Funcion: Pone texto del file en un StringBuilder
-    Returns: Objeto StringBuilder
+
+
+    /**
+     * Pone texto del file en un StringBuilder
+     * @param file Es el objeto file
+     * @return Regresa la informacion en un {@code stringBuilder}
      */
-    public StringBuilder ReadFile(File file) {
+    public StringBuilder readFile(File file) {
 
         try {
             Scanner myReader = new Scanner(file);
@@ -43,10 +50,12 @@ public class FileFuncs {
     }
 
 
-    /*
-    Nombre: CheckIfFileExists
-    Funcion: Checar si un archivo existe
-    Returns: Si existe, regresa objeto File, else null
+
+
+    /**
+     *  Checa si un archivo exist
+     * @param path La ubicacion del archivo
+     * @return Regresa un objeto {@code File} si el archivo existe, else {@code null}
      */
     public File checkIfFileExists(String path)
     {
@@ -64,4 +73,32 @@ public class FileFuncs {
         }
         return myObj;
     }
+
+
+    /**
+     * Escribe contenido a un arhivo
+     * @param contents
+     * @param path
+     * @return Regresa {@code true} si la operacion fue exitosa, else {@code false}
+     */
+    public boolean writeFile(String contents,String path)
+    {
+        try {
+            FileWriter myWriter = new FileWriter(path);
+            myWriter.write(contents);
+            myWriter.close();
+            return true;
+
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            return false;
+
+            //e.printStackTrace();
+        }
+
+
+
+    }
+
+
 }

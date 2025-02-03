@@ -1,31 +1,22 @@
-import Categorias.CreadorCategorias;
-import FileClasses.FileFuncs;
-
-
-import java.io.File;
+import MenuPrincipal.MenuPrincipal;
 
 
 public class Main {
+
     public static void main(String[] args) {
 
-        MenuPrincipal _menu = new MenuPrincipal();
+        //TestingShit testingShit = new TestingShit();
+        //testingShit.someMethod();
 
-        _menu.menu();
+        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        menuPrincipal.menu();
 
 
-        String fileName = "Jasons&files/Productos.json";
-        FileFuncs fileFuncs = new FileFuncs();
 
-        File file = fileFuncs.checkIfFileExists(fileName);
 
-        if (file == null)
-            {System.exit(-1);}
 
-        StringBuilder myString = fileFuncs.ReadFile(file);
 
-        CreadorCategorias creadorCategorias = new CreadorCategorias();
 
-        creadorCategorias.CrearCategoriaPrincipal(myString.toString());
 
 
 

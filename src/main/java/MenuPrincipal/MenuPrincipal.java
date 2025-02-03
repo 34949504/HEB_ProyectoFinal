@@ -1,9 +1,12 @@
-/*
+package MenuPrincipal;/*
 Aqui es donde vamos a estar llamando todo
  */
 
 import HelperFuncs.HelperFuncs;
+import FileClasses.FileFuncs;
+import Categorias.Menu_Categorias;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,51 +14,56 @@ import java.util.Scanner;
 public class MenuPrincipal {
 
     private HelperFuncs helperFuncs = new HelperFuncs();
+    private Scanner scanner = new Scanner(System.in);
+    private FileFuncs fileFuncs = new FileFuncs();
+    private Menu_Categorias menuCategorias = new Menu_Categorias();
+
 
     public int  menu()
     {
-
-
-        Scanner scanner = new Scanner(System.in);
-
+        boolean active = true;
         List<String> carrito = new ArrayList<String>();
         List<Integer> cantidad = new ArrayList<Integer>();
         List<Float> precio = new ArrayList<Float>();
-
-
         int listLength = 0;
         int total = 0;
 
-        boolean active = true;
+        String fileName = "Jasons&files/Productos.json";
 
         while (active)
         {
-            imprimirListas(carrito,cantidad,precio,listLength);
-            System.out.print("Total: "+total + "\n\n");
+
+        File file = fileFuncs.checkIfFileExists(fileName);
+        StringBuilder string = fileFuncs.readFile(file);
 
 
-            //Imprimir categorias
-
-
-
-
-            System.out.println("Selecciona:");
-            String buffer = scanner.nextLine();
-
-
-            //Usuario escribio admin
-            if ((helperFuncs.compareWord(buffer, "admin")))
-            {
-
-
-            }
+        menuCategorias.menu(string.toString());
 
 
 
 
 
 
-            active = false;
+
+
+
+
+        imprimirListas(carrito,cantidad,precio,listLength);
+        System.out.print("Total: "+total + "\n\n");
+
+
+        //Imprimir categorias todo
+
+
+
+
+        System.out.println("Selecciona:");
+        String buffer = scanner.nextLine();
+
+
+        //Usuario escribio admin
+        if ((helperFuncs.compareWord(buffer, "admin")))
+        {
 
 
         }
@@ -67,8 +75,14 @@ public class MenuPrincipal {
 
 
 
-        return 0;
 
+
+
+
+
+
+    }
+        return 0;
     }
 
     public void imprimirListas(List<String> carrito,List<Integer> cantidad, List<Float> precio, int length) {
