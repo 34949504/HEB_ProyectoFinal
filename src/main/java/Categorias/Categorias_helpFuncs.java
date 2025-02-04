@@ -2,6 +2,7 @@ package Categorias;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -182,13 +183,14 @@ public class Categorias_helpFuncs {
 
     public void agregarAtributos(JSONObject json,List<String> stackKeys,int stackCount)
     {
-        String[] atributos = {"descripcion", "color", "proveedor"};
+        String[] atributos = {"descripcion", "color", "proveedor","precio","cantidad"};
+        int atributosLen = 5;
 
         System.out.println("Seleccion de Atributos");
         printSymbolStraightLine('-',20);
         System.out.println();
 
-        for (int i = 0; i<3;++i)
+        for (int i = 0; i<atributosLen;++i)
         {
             System.out.printf("(%d)%s\n",i,atributos[i]);
         }
@@ -199,21 +201,54 @@ public class Categorias_helpFuncs {
             System.out.println("Selecciona:");
             sel = helperFuncs.checkIfInt(scanner.nextLine());
 
-            if (sel > -1 && sel <3)
+            if (sel > -1 && sel <atributosLen)
                 break;
 
             System.out.println("Indice no valido");
         }
 
-
-        System.out.printf("Entra el valor de %s:",atributos[sel]);
-        String valor = scanner.nextLine();
-
         JSONObject pointer = json;
-
         pointer = traverseStack(pointer,stackKeys,stackCount,0);
 
+        System.out.printf("Entra el valor de %s:",atributos[sel]);
+        if (sel < 3)
+        {
+        String valor = scanner.nextLine();
         pointer.put(atributos[sel],valor);
+
+        }else {
+            if (sel == 3)
+            {
+                float valor;
+                while (true)
+                {
+                    valor = helperFuncs.checkIfFloat(scanner.nextLine());
+
+                    if (!Float.isNaN(valor))
+                        break;
+                    System.out.println("Not a number");
+                }
+                pointer.put(atributos[sel],valor);
+
+            }else {
+
+                int valor;
+                while (true)
+                {
+                    valor = helperFuncs.checkIfInt(scanner.nextLine());
+
+                    if (valor > -1)
+                        break;
+                    System.out.println("Not a number");
+                }
+                pointer.put(atributos[sel],valor);
+
+
+            }
+        }
+
+
+
 
         fileFuncs.writeFile(json.toString(4), "Jasons&files/Productos.json");
 
@@ -274,6 +309,102 @@ public class Categorias_helpFuncs {
             fileFuncs.writeFile(json.toString(4), "Jasons&files/Productos.json");
 
 
+
+        }
+
+    }
+
+    public void imprimirValoresDeArticulo(JSONObject json,List<String> stackKeys,int stackCount,String key_name)
+    {
+
+        JSONObject pointer = json;
+        pointer = traverseStack(pointer,stackKeys,stackCount,0);
+
+        List<String> listaInts = Arrays.asList("cantidad");
+        List<String> listaFloats = Arrays.asList("precio");
+        List<String> listaStrings = Arrays.asList("descripcion","color","proveedor");
+
+        List<List<String>> allLists = Arrays.asList(listaInts, listaFloats, listaStrings);
+
+        int i = 0;
+
+        boolean found = false;
+        for (; i < allLists.size(); ++i) {
+            int x = 0;
+            for (String key : allLists.get(i)) {
+
+                if (key_name.compareTo(key) == 0  ){
+                    found =true;
+                    break;}
+                ++x;
+            }
+            if (found)
+                break;;
+        }
+
+        switch (i)
+        {
+            //ints
+            case 0:
+                int valInt =pointer.getInt(key_name);
+                System.out.printf("%s:%d",key_name,valInt);
+
+                break;
+            //floats
+            case 1:
+                float valFloat = pointer.getFloat(key_name);
+                System.out.printf("%s:%f",key_name,valFloat);
+
+                break;
+            //strings
+            case 2:
+                String valString = pointer.getString(key_name);
+                System.out.printf("%s:%s",key_name,valString);
+
+                break;
+        }
+
+        scanner.nextLine();
+
+
+
+
+
+    }
+
+
+
+
+    /**
+     * Imprime las categorias, guarda en una lista las keys temporalmente
+     * @param list Una lista para guardar las keys displayadas temporalmente
+     * @param keys Las keys del json
+     * @param count El contador de las keys
+     * @return Regresa la {@code cantidad} de keys
+     */
+    public int displayKeys(List<String> list,Iterator<String> keys,int count)
+    {
+
+        while (keys.hasNext()) {
+            String key = keys.next();
+            System.out.print(String.format("(%d)%s\n",count,key));
+            list.add(key);
+
+            count++;
+
+        }
+
+        return count;
+    }
+
+
+    public void  displayAtributos(Iterator<String> keys,JSONObject json, List<String> stackKeys, int stackCount)
+    {
+
+
+        while (keys.hasNext()) {
+            String key = keys.next();
+            imprimirValoresDeArticulo(json,stackKeys,stackCount,key);
 
         }
 

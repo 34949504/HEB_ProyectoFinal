@@ -1,18 +1,8 @@
-{"Frutas y verduras": {
-    "Semillas": {},
-    "Verduras": {},
-    "Frutas": {
-        "Frutos rojos": {
-            "Manzana": {
-                "precio": 13,
-                "cantidad": 100
-            },
-            "Manzana pequena": {
-                "precio": 10,
-                "cantidad": 20
-            }
-        },
-        "Frutos morados": {},
-        "Frutos amarillos": {}
-    }
+{"Despensa": {
+    "Aceites y Mantecas": {"Aceite de canola": {
+        "descripcion": "El aceite de canola es malo",
+        "precio": 70,
+        "cantidad": 20
+    }},
+    "Alimentos enlatados y conservas": {}
 }}

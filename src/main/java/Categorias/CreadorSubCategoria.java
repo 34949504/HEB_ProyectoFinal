@@ -16,6 +16,7 @@ public class CreadorSubCategoria {
     private HelperFuncs helperFuncs = new HelperFuncs();
     private Categorias_helpFuncs categoriasHelpFuncs = new Categorias_helpFuncs();
     private FileFuncs fileFuncs = new FileFuncs();
+    private CrearArticulosMetodo2 crearArticulosMetodo2 = new CrearArticulosMetodo2();
 
 
     /**
@@ -68,10 +69,10 @@ public class CreadorSubCategoria {
             String text;
 
             if (isInsideFlag && !isInsideArticulo){
-                Collections.addAll(optList,"Agregar","Agregar Articulo","Eliminar","Regresar");
+                Collections.addAll(optList,"Agregar","Agregar Articulo","Importar archivo csv","Eliminar","Regresar");
 
-                 text = String.format("*Opciones*\n(A%d)Agregar categoria\n(A%d)Agregar Articulo\n(A%d)Eliminar categoria\n(A%d)Regresar\n",
-                        opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++);
+                 text = String.format("*Opciones*\n(A%d)Agregar categoria\n(A%d)Agregar Articulo\n(A%d)Importar archivo\n(A%d)Eliminar categoria\n(A%d)Regresar\n",
+                        opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++,opcionesCount++);
 
                 System.out.println(Categorias_helpFuncs.encapsulateText(text));
 
@@ -79,9 +80,9 @@ public class CreadorSubCategoria {
 
             else if (isInsideArticulo)
             {
-                Collections.addAll(optList,"Agregar atributo","Cambiar Nombre","Eliminar Articulo","Regresar");
+                Collections.addAll(optList,"Agregar/modificar atributo","Cambiar Nombre","Eliminar Articulo","Regresar");
 
-                text = String.format("*Opciones*\n(A%d)Agregar atributo\n(A%d)Cambiar Nombre\n(A%d)Eliminar Articulo\n(A%d)Regresar\n",
+                text = String.format("*Opciones*\n(A%d)Agregar/modificar atributo\n(A%d)Cambiar Nombre\n(A%d)Eliminar Articulo\n(A%d)Regresar\n",
                         opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++);
 
                 System.out.println(Categorias_helpFuncs.encapsulateText(text));
@@ -97,8 +98,11 @@ public class CreadorSubCategoria {
             }
 
 
-            count = displayKeys(list,keys,count); // Display keys
-            int key_count = count;
+                count = categoriasHelpFuncs.displayKeys(list,keys,count); // Display keys
+                int key_count = count;
+
+
+
 
 
 
@@ -243,6 +247,9 @@ public class CreadorSubCategoria {
 
                 obj.put("precio",articuloPrecio);
                 obj.put("cantidad",articuloCantidad);
+                obj.put("descripcion","");
+                obj.put("color","");
+                obj.put("proveedor","");
 
                 pointer.put(articuloNombre,obj);
 
@@ -255,8 +262,9 @@ public class CreadorSubCategoria {
 
         //"Agregar atributo","Cambiar Nombre","Eliminar Articulo","Regresar"
 
-            }else if (categoria.toString().compareTo("Agregar atributo") == 0)
+            }else if (categoria.toString().compareTo("Agregar/modificar atributo") == 0)
             {
+
                 categoriasHelpFuncs.agregarAtributos(json,stackKeys,stackCount);
                 pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
 
@@ -288,10 +296,30 @@ public class CreadorSubCategoria {
                 keys = pointer.keys(); // Reinitialize the iterator with the updated pointer
             }
 
+            else if (categoria.toString().compareTo("Importar archivo csv") == 0)
+            {
+                crearArticulosMetodo2.funcionPrincipal(json,stackKeys,stackCount);
+
+                pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
+                keys = pointer.keys(); // Reinitialize the iterator with the updated pointer
+
+            }
+
 
             else
             {
 
+                if (isInsideArticulo)
+                {
+
+                    categoriasHelpFuncs.imprimirValoresDeArticulo(json,stackKeys,stackCount,categoria.toString());
+
+                    pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
+                    keys = pointer.keys();
+
+
+                }
+                else {
                 stackKeys.add(categoria.toString());
                 stackCount++;
 
@@ -303,7 +331,7 @@ public class CreadorSubCategoria {
 
                 isInsideArticulo =  categoriasHelpFuncs.checkifInsideArticulo(json,stackKeys,stackCount);
 
-                isInsideFlag = true;
+                isInsideFlag = true;}
 
             }
 
@@ -338,30 +366,28 @@ public class CreadorSubCategoria {
 
         boolean active = true;
 
-
-        System.out.println("Entra el nombre de la subcategoria:");
+        System.out.println("Ejemplos: Dules,Salados  o Dulces");
+        System.out.println("Entra el nombre de las categorias:");
         String subcategoria = scanner.nextLine();
+
+        String[] categoriasList = subcategoria.split(",");
 
 
         currentJson = categoriasHelpFuncs.traverseStack(currentJson,Stack_keys,stackCount,0);
-        //for (int i = 0; i<stackCount;++i)
-        //{
-          //  currentJson = currentJson.getJSONObject(Stack_keys.get(i));
-        //}
 
-        if ( !categoriasHelpFuncs.checkIfkeyAlreadyExists(currentJson,subcategoria) ) {
+        for (String categoria: categoriasList) {
+            if (!categoriasHelpFuncs.checkIfkeyAlreadyExists(currentJson, categoria)) {
 
-            currentJson.put(subcategoria, new JSONObject());
+                currentJson.put(categoria, new JSONObject());
 
 
-            //System.out.println(originalJson.toString(4));
 
-            fileFuncs.writeFile(originalJson.toString(4), "Jasons&files/Productos.json");
 
-        }
-        else
-            System.out.println("Categoria "+subcategoria+" ya existe");
+            } else
+                System.out.println("Categoria " + subcategoria + " ya existe");
 
+            }
+        fileFuncs.writeFile(originalJson.toString(4), "Jasons&files/Productos.json");
 
 
 
@@ -371,27 +397,7 @@ public class CreadorSubCategoria {
     }
 
 
-    /**
-     * Imprime las categorias
-     * @param list
-     * @param keys
-     * @param count
-     * @return Regresa la {@code cantidad} de keys
-     */
-    private int displayKeys(List<String> list,Iterator<String> keys,int count)
-    {
 
-        while (keys.hasNext()) {
-            String key = keys.next();
-            System.out.print(String.format("(%d)%s\n",count,key));
-            list.add(key);
-
-            count++;
-
-        }
-
-        return count;
-    }
 
 
     /**
