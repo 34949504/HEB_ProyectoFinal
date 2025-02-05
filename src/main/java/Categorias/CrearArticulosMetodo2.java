@@ -41,7 +41,12 @@ public class CrearArticulosMetodo2 {
             File file = fileFuncs.checkIfFileExists(path);
             if (file != null && hasCSVExtension(path))
                 break;
-            System.out.println("Path es incorrecto");}
+
+            helperFuncs.clearScreen();
+            System.out.println("Path es incorrecto");
+            return;
+
+            }
         }
 
         readingCSV(path,json,stackKeys,stackCount);
@@ -152,7 +157,6 @@ public class CrearArticulosMetodo2 {
                 // Check if the row has the correct number of columns
                 ++total;
                 if (line.length != expectedColumns) {
-                    System.out.println("Skipping invalid row: " + String.join(",", line));
                     continue; // Skip this row
                 }
 
@@ -184,7 +188,7 @@ public class CrearArticulosMetodo2 {
             if (written == total)
                 System.out.println("Se ha agredado "+written +" articulos.");
             else
-                System.out.printf("Se ha agreado %d articulos y %d fueron descartados por formato erroneo",written,total-written);
+                System.out.printf("Se ha agreado %d articulos y %d fueron descartados por formato erroneo\n",written,total-written-1);
 
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace(); // Handle errors

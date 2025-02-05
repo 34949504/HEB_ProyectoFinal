@@ -29,9 +29,8 @@ public class CreadorSubCategoria {
     public void crearSubcategoria(JSONObject json)
     {
 
-        System.out.println(json.toString(4));
         boolean active = true;
-        boolean isInsideFlag = false;
+        boolean isOutsideRoot = false;
         boolean isInsideArticulo = false;
 
         List<String> stackKeys = new ArrayList<>();  // Guardar las keys por donde se ha traversado
@@ -48,23 +47,21 @@ public class CreadorSubCategoria {
             List<String> optList = new ArrayList<>(); // Guardar texto de las opciones
 
 
-            if (stackCount == 0){ //Checks if its nos inside a categoria
-                isInsideFlag = false;}
+            if (stackCount == 0){ //Checks if its nos inside a categoria which means its in root
+                isOutsideRoot = false;}
 
 
 
             int count = 0;
             int opcionesCount = 0;
 
-            String text;
+            String text; // Utilizado para almacenar las opciones de root, o de categoria, o de articulo
 
-            if (isInsideFlag && !isInsideArticulo){
-                Collections.addAll(optList,"Agregar","Agregar Articulo","Importar archivo csv","Eliminar","Regresar");
+            if (isOutsideRoot && !isInsideArticulo){
+                Collections.addAll(optList,"Agregar","Agregar Articulo","Importar archivo csv","Cambiar Nombre","Eliminar","Regresar");
 
-                 text = String.format("*Opciones*\n(A%d)Agregar categoria\n(A%d)Agregar Articulo\n(A%d)Importar archivo\n(A%d)Eliminar categoria\n(A%d)Regresar\n",
-                        opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++,opcionesCount++);
-
-                //System.out.println(Categorias_helpFuncs.encapsulateText(text));
+                 text = String.format("*Opciones*\n(A%d)Agregar categoria\n(A%d)Agregar Articulo\n(A%d)Importar archivo csv\n(A%d)Cambiar Nombre\n(A%d)Eliminar categoria\n(A%d)Regresar\n",
+                        opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++,opcionesCount++,opcionesCount++);
 
             }
 
@@ -75,46 +72,43 @@ public class CreadorSubCategoria {
                 text = String.format("*Opciones*\n(A%d)Agregar/modificar atributo\n(A%d)Cambiar Nombre\n(A%d)Eliminar Articulo\n(A%d)Regresar\n",
                         opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++);
 
-                //System.out.println(Categorias_helpFuncs.encapsulateText(text));
-
 
             }
             else {/** Cuando estas en root **/
                 Collections.addAll(optList,"Agregar","Exit");
 
                 text = String.format("*Opciones*\n(A%d)Agregar categoria\n(A%d)Exit\n", opcionesCount++, opcionesCount++);
-                //System.out.println(Categorias_helpFuncs.encapsulateText(text));
 
             }
 
-            boolean wrongNum = true;
 
+            boolean wrongNum = true;
             int num = 0;
-            StringBuilder categoria = new StringBuilder();
+            StringBuilder categoria = new StringBuilder(); // Puede guardar la key de la categoria o tambien es utilizada para utilizar las opciones
             while (wrongNum) {
 
 
-                if (isInsideFlag){
-                    if (stackCount >0){
+                if (isOutsideRoot){
                         String path = displayPath(stackKeys,stackCount);
-
                         System.out.println("Path "+path );
-                    }}
+                    }
                 else
                 {
                     System.out.println("Path Root");
                 }
 
-                System.out.println(Categorias_helpFuncs.encapsulateText(text));
+                System.out.println(Categorias_helpFuncs.encapsulateText(text)); //Imprime opciones en una caja
 
 
-                System.out.println(isInsideArticulo);
-                JsonContextBundle jsonContextBundle = new JsonContextBundle(json, stackKeys, stackCount);
-                count = categoriasHelpFuncs.displayKeys(list, keys, count, isInsideArticulo, jsonContextBundle); // Display keys
-                System.out.println("Hi, we reached here or smoe shit");
-                int key_count = count;
 
-              //  categoria = new StringBuilder(); // Later stores the string of option or the key of a categoria #Dumbass
+                //System.out.println(isInsideArticulo); //
+
+                JsonContextBundle jsonContextBundle = new JsonContextBundle(json, stackKeys, stackCount); // Guarda en un objeto esas 3 cosas para compactar
+
+                count = categoriasHelpFuncs.displayKeys(list, keys, count, isInsideArticulo, jsonContextBundle); // Imprime keys, regresa el numero de keys, si isInsideArticulo ES TRUe, lo imprime de manera diferente
+
+                //System.out.println("Hi, we reached here or smoe shit");
+
 
 
                 System.out.println("Selecciona:");
@@ -125,7 +119,7 @@ public class CreadorSubCategoria {
                 helperFuncs.clearScreen();
 
 
-
+                /** SIGNIFICA QUE EL USUARIO HA SELECCIONADO UNA CATEGORIA **/
                 if (num >= 0 && num < count)
                 {
                     categoria.append(list.get(num));
@@ -134,6 +128,8 @@ public class CreadorSubCategoria {
                 else
                 {
                     int indexOpt = Categorias_helpFuncs.extractNumberIfValid(buffer);
+
+                    /**SIGNIFICA QUE EL USUARIO HA SELECCIONADO UNA OPCION CON EL FORMATO A +NUMERO **/
                     if (indexOpt > -1 && indexOpt < opcionesCount )
                     {
                         categoria.append(optList.get(indexOpt));
@@ -143,7 +139,6 @@ public class CreadorSubCategoria {
                         helperFuncs.clearScreen();
                         System.out.println("Index is incorrect");
                         count = 0;
-                        //pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
                         keys = pointer.keys();
                         list.clear();
 
@@ -154,11 +149,16 @@ public class CreadorSubCategoria {
             }
 
 
-            pointer  = json; //categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
+            pointer  = json; //Se vuelve a resetear el puntero porque my dumbass implemento en las otras funciones de esa manera :(
+
+            /**FINALIZA LA FUNCION **/
             if (categoria.toString().compareTo("Exit") == 0)
             {
                 active = false;
             }
+
+
+            /**AGREGAR CATEGORIA O SUBCATEGORIAS **/
             else if (categoria.toString().compareTo("Agregar") == 0)
             {
                 agregarSubCategoria(json,stackKeys,stackCount);
@@ -169,28 +169,26 @@ public class CreadorSubCategoria {
                 keys = pointer.keys();
 
             }
+
+            /**TE MUEVE UNA KEY HACIA ATRAS TRAVERSANDO A LA CATEGORIA PREVIA **/
             else if (categoria.toString().compareTo("Regresar") == 0)
             {
-                isInsideArticulo = false;
+                isInsideArticulo = false; //Si se retrocede, y si estuvieramos en un articulo, significa que ya no estamos ahi
 
                 if (stackCount > 0) {
-                    --stackCount; // Only decrement if we are not at the root level
-                    stackKeys.remove(stackCount); // Remove the last key
-                } else {
-                    System.out.println("You are already at the root level. Cannot go back further.");
+                    --stackCount;
+                    stackKeys.remove(stackCount); // Quita del stack la ultima llave porque hemos retrocedido
                 }
 
-                //pointer = json;
-                pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
+                pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0); // traverso
 
-                //for (int i = 0; i < stackCount; ++i) {
-                 //   pointer = pointer.getJSONObject(stackKeys.get(i)); // Traverse up the stack
-                //}
 
-                keys = pointer.keys(); // Reinitialize the iterator with the updated pointer
+                keys = pointer.keys(); // Reinicio el iterador con las nuevas llaves
 
 
             }
+
+            /**ELIMINA CATEGORIAS Y TAMBIEN SUS CONTENIDOS **/
             else if (categoria.toString().compareTo("Eliminar") == 0)
             {
 
@@ -199,16 +197,15 @@ public class CreadorSubCategoria {
                 if (stackCount > 0) {
                     --stackCount; // Only decrement if we are not at the root level
                     stackKeys.remove(stackCount); // Remove the last key
-                } else {
-                    System.out.println("You are already at the root level. Cannot go back further.");
                 }
 
-                //pointer = json;
                 pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
 
-                keys = pointer.keys(); // Reinitialize the iterator with the updated pointer
+                keys = pointer.keys();
             }
 
+
+            /**SE AGREGA UN ARTICULO DE FORMA BASICA, SOLO SE PREGUNTA POR EL PRECIO Y LA CANTIDAD QUE VA A HABER EN EL STOCK **/
             else if (categoria.toString().compareTo("Agregar Articulo") == 0)
             {
                 String articuloNombre;
@@ -249,6 +246,7 @@ public class CreadorSubCategoria {
 
                 JSONObject obj = new JSONObject();
 
+                /**SE GUARDAN LOS VALORES EN EL JSON OBJ **/
                 obj.put("precio",articuloPrecio);
                 obj.put("cantidad",articuloCantidad);
                 obj.put("descripcion","");
@@ -259,14 +257,14 @@ public class CreadorSubCategoria {
 
                 fileFuncs.writeFile(json.toString(4), "Jasons&files/Productos.json");
 
-                //File file = fileFuncs.checkIfFileExists("Jasons&files/Productos.json");
-
                 keys = pointer.keys();
 
 
-        //"Agregar atributo","Cambiar Nombre","Eliminar Articulo","Regresar"
 
-            }else if (categoria.toString().compareTo("Agregar/modificar atributo") == 0)
+            }
+
+            /**ES PARA AGREGAR Y MODIFICAR LOS ATRIBUTOS DE UN ARTICULO **/
+            else if (categoria.toString().compareTo("Agregar/modificar atributo") == 0)
             {
 
                 categoriasHelpFuncs.agregarAtributos(json,stackKeys,stackCount);
@@ -275,12 +273,15 @@ public class CreadorSubCategoria {
                 keys = pointer.keys();
             }
 
+            /*CAMBIAR NOMBRE */
             else if (categoria.toString().compareTo("Cambiar Nombre") == 0)
             {
-                categoriasHelpFuncs.cambiarNombreDeArticulo(json,stackKeys,stackCount);
+                categoriasHelpFuncs.cambiarNombreDeArticulo(json,stackKeys,stackCount,isInsideArticulo); //TODO Cambiar nombre de esto porque puedo cambiar categoria y articulo
                 pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
                 keys = pointer.keys();
             }
+
+            /*ELIMINAR ARTICULO */
             else if (categoria.toString().compareTo("Eliminar Articulo") == 0)
             {
                 isInsideArticulo = false;
@@ -300,6 +301,7 @@ public class CreadorSubCategoria {
                 keys = pointer.keys(); // Reinitialize the iterator with the updated pointer
             }
 
+            /*IMPORTAR ARCHIVO CSV*/
             else if (categoria.toString().compareTo("Importar archivo csv") == 0)
             {
                 crearArticulosMetodo2.funcionPrincipal(json,stackKeys,stackCount);
@@ -310,6 +312,8 @@ public class CreadorSubCategoria {
             }
 
 
+            /*SI NO SE SELECCIONARON NINGUNA DE LAS OPCIONES ANTERIORES
+            * SIGNIFICA QUE EL ADMIN HA SELECCIONADO UNA CATEGORIA */
             else
             {
 
@@ -335,7 +339,7 @@ public class CreadorSubCategoria {
 
                 isInsideArticulo =  categoriasHelpFuncs.checkifInsideArticulo(json,stackKeys,stackCount);
 
-                isInsideFlag = true;}
+                isOutsideRoot = true;}
 
             }
 
@@ -355,18 +359,15 @@ public class CreadorSubCategoria {
 
     /**
      * Pregunta por nombre y agrega a una categoria  una subcategoria
+     * El admin puede poner varias categorias separadas por comas
+     * Ejemplo: Carnes,Frios,Lacteos.
      * @param originalJson
      * @param Stack_keys
      * @param stackCount
      */
     private void agregarSubCategoria(JSONObject originalJson,List<String> Stack_keys,int stackCount)
     {
-        JSONObject currentJson = originalJson;
-
-
-
-
-
+        JSONObject pointer = originalJson;
 
         boolean active = true;
 
@@ -377,12 +378,12 @@ public class CreadorSubCategoria {
         String[] categoriasList = subcategoria.split(",");
 
 
-        currentJson = categoriasHelpFuncs.traverseStack(currentJson,Stack_keys,stackCount,0);
+        pointer = categoriasHelpFuncs.traverseStack(pointer,Stack_keys,stackCount,0);
 
         for (String categoria: categoriasList) {
-            if (!categoriasHelpFuncs.checkIfkeyAlreadyExists(currentJson, categoria)) {
+            if (!categoriasHelpFuncs.checkIfkeyAlreadyExists(pointer, categoria)) {
 
-                currentJson.put(categoria, new JSONObject());
+                pointer.put(categoria, new JSONObject());
 
 
 
@@ -440,8 +441,6 @@ public class CreadorSubCategoria {
 
         pointer = categoriasHelpFuncs.traverseStack(originalJson,Stack_keys,stackCount,0);
 
-        //for (int i = 0; i< stackCount;++i)
-            //pointer = pointer.getJSONObject(Stack_keys.get(i));
 
         Iterator<String> keys = pointer.keys();
         int eleements = categoriasHelpFuncs.countKeys(keys);
@@ -453,8 +452,6 @@ public class CreadorSubCategoria {
 
 
         pointer = categoriasHelpFuncs.traverseStack(originalJson,Stack_keys,stackCount,-1);
-        //for (int i = 0; i< stackCount-1;++i)
-            //pointer = pointer.getJSONObject(Stack_keys.get(i));
 
 
         if (helperFuncs.compareWord(opt, "Y"))
@@ -462,6 +459,8 @@ public class CreadorSubCategoria {
             pointer.remove(Stack_keys.get(stackCount-1));
             fileFuncs.writeFile(originalJson.toString(4),"Jasons&files/Productos.json");
         }
+
+        helperFuncs.clearScreen();
 
 
 

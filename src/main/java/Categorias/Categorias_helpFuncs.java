@@ -207,58 +207,75 @@ public class Categorias_helpFuncs {
         printSymbolStraightLine('-',20);
         System.out.println();
 
-        for (int i = 0; i<atributosLen;++i)
-        {
-            System.out.printf("(%d)%s\n",i,atributos[i]);
-        }
 
         int sel;
         while (true)
         {
+            for (int i = 0; i<atributosLen;++i)
+            {
+                System.out.printf("(%d)%s\n",i,atributos[i]);
+            }
+
             System.out.println("Selecciona:");
             sel = helperFuncs.checkIfInt(scanner.nextLine());
 
             if (sel > -1 && sel <atributosLen)
                 break;
 
+            helperFuncs.clearScreen();
             System.out.println("Indice no valido");
         }
 
         JSONObject pointer = json;
         pointer = traverseStack(pointer,stackKeys,stackCount,0);
 
+
+        while (true){
         System.out.printf("Entra el valor de %s:",atributos[sel]);
-        if (sel < 3)
+        String buffer = scanner.nextLine();
+
+            if (sel < 3)
         {
-        String valor = scanner.nextLine();
-        pointer.put(atributos[sel],valor);
+            helperFuncs.clearScreen();
+
+            pointer.put(atributos[sel],buffer);
 
         }else {
             if (sel == 3)
             {
                 float valor;
-                while (true)
-                {
-                    valor = helperFuncs.checkIfFloat(scanner.nextLine());
+                valor = helperFuncs.checkIfFloat(buffer);
+                helperFuncs.clearScreen();
 
-                    if (!Float.isNaN(valor))
-                        break;
-                    System.out.println("Not a number");
+                if (!Float.isNaN(valor)){
+                    pointer.put(atributos[sel],valor);
+                    break;
                 }
-                pointer.put(atributos[sel],valor);
+                else
+                {/*
+                    Float num = checkNumberFloat(buffer);
+                    if (num != null)
+                    {
+                        pointer.put(atributos[sel],num);
+                    }*/
+                }
+                System.out.println("Not a number");
+                return;
 
             }else {
 
                 int valor;
-                while (true)
-                {
-                    valor = helperFuncs.checkIfInt(scanner.nextLine());
 
-                    if (valor > -1)
-                        break;
-                    System.out.println("Not a number");
+                valor = helperFuncs.checkIfInt(buffer);
+                helperFuncs.clearScreen();
+
+                if (valor > -1){
+                    pointer.put(atributos[sel],valor);
+                    break;
                 }
-                pointer.put(atributos[sel],valor);
+                System.out.println("Not a number");
+                return;
+
 
 
             }
@@ -267,29 +284,30 @@ public class Categorias_helpFuncs {
 
 
 
+
+    }
         fileFuncs.writeFile(json.toString(4), "Jasons&files/Productos.json");
-
-
-
-
-
-
-
 
     }
 
-    public void cambiarNombreDeArticulo(JSONObject json,List<String> stackKeys,int stackCount)
+    public void cambiarNombreDeArticulo(JSONObject json,List<String> stackKeys,int stackCount,boolean isInsideArticulo)
     {
         JSONObject pointer = json;
         pointer = traverseStack(pointer,stackKeys,stackCount,-1);
         String previousName = stackKeys.get(stackCount-1);
 
-        String newName;
+        String newName = "";
         while (true)
         {
+            if (isInsideArticulo){
         System.out.printf("Nombre actual del articulo %s\n",previousName);
         System.out.println("Entra el nuevo nombre");
-        newName = scanner.nextLine();
+        newName = scanner.nextLine();}
+            else{
+                System.out.printf("Nombre actual de la categoría %s\n",previousName);
+                System.out.println("Entra el nuevo nombre");
+                newName = scanner.nextLine();
+            }
 
         if (!checkIfkeyAlreadyExists(pointer,newName))
             break;
@@ -313,7 +331,7 @@ public class Categorias_helpFuncs {
 
         String jsonArticuloContents = pointer.getJSONObject(previousName).toString(4); // store contents of articulo
 
-        System.out.println(jsonArticuloContents);
+        //System.out.println(jsonArticuloContents);
         pointer.remove(previousName); // remove articulo
 
         pointer.put(newName, new JSONObject(jsonArticuloContents));
@@ -453,19 +471,23 @@ public class Categorias_helpFuncs {
 
     }
 
-/*
-    public String getArticuloKeyValue(String key,List<String> stackKeys,int stackCount,JSONObject json)
-    {
-        List<String> keysStr = Arrays.asList("descripcion", "precio", "color", "proveedor", "cantidad");
+    public static Integer checkNumberInteger(String input) {
+        if (input.matches("[+-]?\\d+(\\.\\d)?")) {
+            return (int) Double.parseDouble(input);
+        }
+        return null;
+    }
 
-        JSONObject pointer = json;
-        pointer = traverseStack(pointer,stackKeys,stackCount,0);
+    public static Float checkNumberFloat(String input) {
+        if (input.matches("[+-]?\\d+(\\.\\d+)?")) {
+            return Float.parseFloat(input);
+        }
+        return null;
+    }
 
 
-        pointer.get
 
 
-    }*/
 
 
 
