@@ -29,7 +29,7 @@ public class CreadorSubCategoria {
     public void crearSubcategoria(JSONObject json)
     {
 
-        Iterator<String> keys = json.keys();
+        System.out.println(json.toString(4));
         boolean active = true;
         boolean isInsideFlag = false;
         boolean isInsideArticulo = false;
@@ -39,29 +39,19 @@ public class CreadorSubCategoria {
 
 
 
+        JSONObject pointer = json;  //json objeto que guarda referencia al json
+        Iterator<String> keys = pointer.keys(); //Las keys del json de donde se encuenta el pointer (osea el inicio)
+
 
         while (active){
             List<String> list  = new ArrayList<>(); // Guardar las keys de las categorias
-            List<String> articuloslist  = new ArrayList<>(); // Guardar las keys de las categorias
-
-            System.out.println("Inside articulo is " + isInsideArticulo);
             List<String> optList = new ArrayList<>(); // Guardar texto de las opciones
 
 
-            if (stackCount == 0){
+            if (stackCount == 0){ //Checks if its nos inside a categoria
                 isInsideFlag = false;}
 
 
-            if (isInsideFlag){
-                if (stackCount >0){
-                    String path = displayPath(stackKeys,stackCount);
-
-                    System.out.println("Path "+path );
-            }}
-            else
-                {
-                    System.out.println("Path Root");
-                }
 
             int count = 0;
             int opcionesCount = 0;
@@ -74,7 +64,7 @@ public class CreadorSubCategoria {
                  text = String.format("*Opciones*\n(A%d)Agregar categoria\n(A%d)Agregar Articulo\n(A%d)Importar archivo\n(A%d)Eliminar categoria\n(A%d)Regresar\n",
                         opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++,opcionesCount++);
 
-                System.out.println(Categorias_helpFuncs.encapsulateText(text));
+                //System.out.println(Categorias_helpFuncs.encapsulateText(text));
 
             }
 
@@ -85,7 +75,7 @@ public class CreadorSubCategoria {
                 text = String.format("*Opciones*\n(A%d)Agregar/modificar atributo\n(A%d)Cambiar Nombre\n(A%d)Eliminar Articulo\n(A%d)Regresar\n",
                         opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++);
 
-                System.out.println(Categorias_helpFuncs.encapsulateText(text));
+                //System.out.println(Categorias_helpFuncs.encapsulateText(text));
 
 
             }
@@ -93,25 +83,40 @@ public class CreadorSubCategoria {
                 Collections.addAll(optList,"Agregar","Exit");
 
                 text = String.format("*Opciones*\n(A%d)Agregar categoria\n(A%d)Exit\n", opcionesCount++, opcionesCount++);
-                System.out.println(Categorias_helpFuncs.encapsulateText(text));
+                //System.out.println(Categorias_helpFuncs.encapsulateText(text));
 
             }
 
+            boolean wrongNum = true;
 
-                count = categoriasHelpFuncs.displayKeys(list,keys,count); // Display keys
+            int num = 0;
+            StringBuilder categoria = new StringBuilder();
+            while (wrongNum) {
+
+
+                if (isInsideFlag){
+                    if (stackCount >0){
+                        String path = displayPath(stackKeys,stackCount);
+
+                        System.out.println("Path "+path );
+                    }}
+                else
+                {
+                    System.out.println("Path Root");
+                }
+
+                System.out.println(Categorias_helpFuncs.encapsulateText(text));
+
+
+                System.out.println(isInsideArticulo);
+                JsonContextBundle jsonContextBundle = new JsonContextBundle(json, stackKeys, stackCount);
+                count = categoriasHelpFuncs.displayKeys(list, keys, count, isInsideArticulo, jsonContextBundle); // Display keys
+                System.out.println("Hi, we reached here or smoe shit");
                 int key_count = count;
 
+              //  categoria = new StringBuilder(); // Later stores the string of option or the key of a categoria #Dumbass
 
 
-
-
-
-
-            boolean wrong_number = true;
-            StringBuilder categoria = new StringBuilder(); // Later stores the string of option or the key of a categoria #Dumbass
-            int num = 0;
-            while (wrong_number)
-            {
                 System.out.println("Selecciona:");
 
                 String buffer = scanner.nextLine();
@@ -124,7 +129,7 @@ public class CreadorSubCategoria {
                 if (num >= 0 && num < count)
                 {
                     categoria.append(list.get(num));
-                    wrong_number = false;
+                    wrongNum = false;
                 }
                 else
                 {
@@ -132,25 +137,24 @@ public class CreadorSubCategoria {
                     if (indexOpt > -1 && indexOpt < opcionesCount )
                     {
                         categoria.append(optList.get(indexOpt));
-                        wrong_number = false;
+                        wrongNum = false;
 
                     } else{
+                        helperFuncs.clearScreen();
                         System.out.println("Index is incorrect");
+                        count = 0;
+                        //pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
+                        keys = pointer.keys();
+                        list.clear();
 
-                        System.out.println(Categorias_helpFuncs.encapsulateText(text));
 
 
-                        int x = 0;
-                        for ( ; x<count;++x) {
-                            System.out.print(String.format("(%d)%s\n", x, list.get(x)));
-                        }
                     }
                 }
-
-
             }
 
-            JSONObject pointer  = json;
+
+            pointer  = json; //categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
             if (categoria.toString().compareTo("Exit") == 0)
             {
                 active = false;
@@ -313,7 +317,7 @@ public class CreadorSubCategoria {
                 {
 
                     categoriasHelpFuncs.imprimirValoresDeArticulo(json,stackKeys,stackCount,categoria.toString());
-
+                    System.out.println("hola");
                     pointer = categoriasHelpFuncs.traverseStack(pointer,stackKeys,stackCount,0);
                     keys = pointer.keys();
 

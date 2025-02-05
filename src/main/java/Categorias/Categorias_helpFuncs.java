@@ -11,6 +11,23 @@ import java.util.regex.*;
 
 import HelperFuncs.HelperFuncs;
 import FileClasses.FileFuncs;
+
+
+
+
+ class JsonContextBundle {
+    JSONObject json;
+    List<String> stackKeys;
+    int stackCount;
+
+    public JsonContextBundle(JSONObject json, List<String> stackKeys, int stackCount) {
+        this.json = json;
+        this.stackKeys = stackKeys;
+        this.stackCount = stackCount;
+    }
+}
+
+
 public class Categorias_helpFuncs {
 
     private HelperFuncs helperFuncs = new HelperFuncs();
@@ -263,29 +280,51 @@ public class Categorias_helpFuncs {
 
     public void cambiarNombreDeArticulo(JSONObject json,List<String> stackKeys,int stackCount)
     {
-
+        JSONObject pointer = json;
+        pointer = traverseStack(pointer,stackKeys,stackCount,-1);
         String previousName = stackKeys.get(stackCount-1);
 
+        String newName;
+        while (true)
+        {
         System.out.printf("Nombre actual del articulo %s\n",previousName);
         System.out.println("Entra el nuevo nombre");
-        String newName = scanner.nextLine();
+        newName = scanner.nextLine();
+
+        if (!checkIfkeyAlreadyExists(pointer,newName))
+            break;
+
+        else if (newName.compareTo(previousName) == 0)
+            {helperFuncs.clearScreen();return;}
+
+        helperFuncs.clearScreen();
+        System.out.printf("El nombre %s ya existe\n",newName);
 
 
-        JSONObject pointer = json;
+
+
+
+        }
+
+
+        pointer = json;
         pointer = traverseStack(pointer,stackKeys,stackCount,-1); //Position myself before artibulo
 
 
-        String jsonArticuloContents = pointer.getJSONObject(previousName).toString(); // store contents of articulo
+        String jsonArticuloContents = pointer.getJSONObject(previousName).toString(4); // store contents of articulo
 
         System.out.println(jsonArticuloContents);
         pointer.remove(previousName); // remove articulo
 
         pointer.put(newName, new JSONObject(jsonArticuloContents));
 
-        System.out.println(pointer.toString());
+        System.out.println(pointer.toString(4));
         stackKeys.set(stackCount - 1, newName); // change key in the stack
 
         fileFuncs.writeFile(json.toString(4), "Jasons&files/Productos.json");
+
+
+        helperFuncs.clearScreen();
 
 
 
@@ -347,24 +386,24 @@ public class Categorias_helpFuncs {
             //ints
             case 0:
                 int valInt =pointer.getInt(key_name);
-                System.out.printf("%s:%d",key_name,valInt);
+                System.out.printf("%s:%d\n",key_name.toUpperCase(),valInt);
 
                 break;
             //floats
             case 1:
                 float valFloat = pointer.getFloat(key_name);
-                System.out.printf("%s:%f",key_name,valFloat);
+                System.out.printf("%s:%f\n",key_name.toUpperCase(),valFloat);
 
                 break;
             //strings
             case 2:
                 String valString = pointer.getString(key_name);
-                System.out.printf("%s:%s",key_name,valString);
+                System.out.printf("%s:%s\n",key_name.toUpperCase(),valString);
 
                 break;
         }
 
-        scanner.nextLine();
+        //scanner.nextLine();
 
 
 
@@ -382,12 +421,16 @@ public class Categorias_helpFuncs {
      * @param count El contador de las keys
      * @return Regresa la {@code cantidad} de keys
      */
-    public int displayKeys(List<String> list,Iterator<String> keys,int count)
+    public int displayKeys(List<String> list,Iterator<String> keys,int count, boolean isInsideArticulo,JsonContextBundle jsonBundle)
     {
 
         while (keys.hasNext()) {
             String key = keys.next();
-            System.out.print(String.format("(%d)%s\n",count,key));
+             if (!isInsideArticulo)
+                System.out.print(String.format("(%d)%s\n",count,key));
+            else {
+                 imprimirValoresDeArticulo(jsonBundle.json, jsonBundle.stackKeys, jsonBundle.stackCount, key);
+             }
             list.add(key);
 
             count++;
@@ -409,6 +452,23 @@ public class Categorias_helpFuncs {
         }
 
     }
+
+/*
+    public String getArticuloKeyValue(String key,List<String> stackKeys,int stackCount,JSONObject json)
+    {
+        List<String> keysStr = Arrays.asList("descripcion", "precio", "color", "proveedor", "cantidad");
+
+        JSONObject pointer = json;
+        pointer = traverseStack(pointer,stackKeys,stackCount,0);
+
+
+        pointer.get
+
+
+    }*/
+
+
+
 
 
 

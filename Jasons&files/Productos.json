@@ -1,8 +1,6 @@
-{"Despensa": {
-    "Aceites y Mantecas": {"Aceite de canola": {
-        "descripcion": "El aceite de canola es malo",
-        "precio": 70,
-        "cantidad": 20
-    }},
-    "Alimentos enlatados y conservas": {}
-}}
+{
+    "Chango": {},
+    "Salchichpapa": {},
+    "bolas": {},
+    "Hola": {"hola": {"hola": {"hola": {"hola": {}}}}}
+}
