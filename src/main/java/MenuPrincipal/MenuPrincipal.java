@@ -2,14 +2,14 @@ package MenuPrincipal;/*
 Aqui es donde vamos a estar llamando todo
  */
 
-import HelperFuncs.HelperFuncs;
-import FileClasses.FileFuncs;
-import Categorias.Menu_Categorias;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import Categorias.Menu_Categorias;
+import FileClasses.FileFuncs;
+import HelperFuncs.HelperFuncs;
 
 public class MenuPrincipal {
 
@@ -27,7 +27,7 @@ public class MenuPrincipal {
         List<Float> precio = new ArrayList<Float>();
         int listLength = 0;
         int total = 0;
-
+        
         String fileName = "Jasons&files/Productos.json";
 
         while (active)
