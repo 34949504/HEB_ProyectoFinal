@@ -1,5 +1,14 @@
 {
-    "Lácteos y Huevo": {},
+    "Lácteos y Huevo": {
+        "Lacteos": {"ergerg": {
+            "descripcion": "",
+            "precio": 3,
+            "color": "",
+            "proveedor": "",
+            "cantidad": 23
+        }},
+        "Huevos": {}
+    },
     "Frutas Y Verduras": {},
     "Jamones": {},
     "Quesos Y Deli": {},

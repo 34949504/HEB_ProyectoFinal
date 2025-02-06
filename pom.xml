@@ -31,6 +31,16 @@
         </dependency>
 
 
+        <!-- https://mvnrepository.com/artifact/dev.ybrig.ck8s.cli/parent -->
+        <dependency>
+            <groupId>dev.ybrig.ck8s.cli</groupId>
+            <artifactId>parent</artifactId>
+            <version>1.6.5</version>
+            <type>pom</type>
+        </dependency>
+
+
+
     </dependencies>
 
 

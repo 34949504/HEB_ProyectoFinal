@@ -226,6 +226,7 @@ public class Categorias_helpFuncs {
             System.out.println("Indice no valido");
         }
 
+        System.out.println("Sel is "+sel);
         JSONObject pointer = json;
         pointer = traverseStack(pointer,stackKeys,stackCount,0);
 
@@ -239,8 +240,11 @@ public class Categorias_helpFuncs {
             helperFuncs.clearScreen();
 
             pointer.put(atributos[sel],buffer);
+            break;
 
         }else {
+
+                //Precio
             if (sel == 3)
             {
                 float valor;
@@ -248,16 +252,20 @@ public class Categorias_helpFuncs {
                 helperFuncs.clearScreen();
 
                 if (!Float.isNaN(valor)){
+                    System.out.println("You cunt sucker");
                     pointer.put(atributos[sel],valor);
                     break;
                 }
                 else
-                {/*
-                    Float num = checkNumberFloat(buffer);
+                {
+                    Float num = checkNumberFloatWithFormat(buffer);
+                    System.out.println("Wtf is going on");
                     if (num != null)
                     {
-                        pointer.put(atributos[sel],num);
-                    }*/
+                        float currentValue = (pointer.getFloat("precio")) +num;
+                        System.out.println("Currenvalue is "+currentValue);
+                        pointer.put(atributos[sel],currentValue);
+                    }
                 }
                 System.out.println("Not a number");
                 return;
@@ -471,14 +479,14 @@ public class Categorias_helpFuncs {
 
     }
 
-    public static Integer checkNumberInteger(String input) {
+    public static Integer checkNumberIntegerWithFormat(String input) {
         if (input.matches("[+-]?\\d+(\\.\\d)?")) {
             return (int) Double.parseDouble(input);
         }
         return null;
     }
 
-    public static Float checkNumberFloat(String input) {
+    public static Float checkNumberFloatWithFormat(String input) {
         if (input.matches("[+-]?\\d+(\\.\\d+)?")) {
             return Float.parseFloat(input);
         }

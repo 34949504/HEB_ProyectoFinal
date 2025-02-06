@@ -60,7 +60,7 @@ public class CreadorSubCategoria {
             if (isOutsideRoot && !isInsideArticulo){
                 Collections.addAll(optList,"Agregar","Agregar Articulo","Importar archivo csv","Cambiar Nombre","Eliminar","Regresar");
 
-                 text = String.format("*Opciones*\n(A%d)Agregar categoria\n(A%d)Agregar Articulo\n(A%d)Importar archivo csv\n(A%d)Cambiar Nombre\n(A%d)Eliminar categoria\n(A%d)Regresar\n",
+                 text = String.format("*Opciones*\n(A%d)Agregar categoria\t(A%d)Agregar Articulo\n(A%d)Importar archivo csv\t(A%d)Cambiar Nombre\n(A%d)Eliminar categoria\t(A%d)Regresar\n",
                         opcionesCount++,opcionesCount++, opcionesCount++, opcionesCount++,opcionesCount++,opcionesCount++);
 
             }

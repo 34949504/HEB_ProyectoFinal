@@ -45,9 +45,13 @@ public class HelperFuncs {
      */
     public float checkIfFloat(String str) {
         try {
+            // Check if the string contains '+' or '-' (excluding cases like "3.14e-2")
+            if (str.startsWith("+") || str.startsWith("-")) {
+                return Float.NaN;
+            }
             return Float.parseFloat(str);
         } catch (NumberFormatException e) {
-            return Float.NaN; // NaN (Not a Number) is a special value for invalid floats
+            return Float.NaN; // NaN for invalid numbers
         }
     }
 
