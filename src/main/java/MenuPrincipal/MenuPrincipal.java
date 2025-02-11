@@ -4,12 +4,25 @@ Aqui es donde vamos a estar llamando todo
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 import Categorias.Menu_Categorias;
 import FileClasses.FileFuncs;
 import HelperFuncs.HelperFuncs;
+import org.json.JSONObject;
+
+import DisplayProducts.UserInterfaceProducts;
+
+
+
+
+
+
+
+
 
 public class MenuPrincipal {
 
@@ -29,22 +42,23 @@ public class MenuPrincipal {
         int total = 0;
         
         String fileName = "Jasons&files/Productos.json";
+        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito,cantidad,precio);
+
+
+
+        List<String> opciones = new ArrayList<>(Arrays.asList("Buscar productos","Pagar","Cerrar sesión")); // Cerrar sesion tiene que ser el ultimo elemento
+        List<Runnable> funcs = Arrays.asList(
+                () -> buscarProductos(bundle_usuario)  // method with 2 args
+                //Main::method2,  // method with no args
+                //() -> method3(42)  // method with 1 arg
+        );
 
         while (active)
         {
 
-        File file = fileFuncs.checkIfFileExists(fileName);
-        StringBuilder string = fileFuncs.readFile(file);
-
-
-        menuCategorias.menu(string.toString());
-
-
-
-
-
-
-
+        //File file = fileFuncs.checkIfFileExists(fileName);
+        //StringBuilder string = fileFuncs.readFile(file);
+        //menuCategorias.menu(string.toString());
 
 
 
@@ -52,21 +66,31 @@ public class MenuPrincipal {
         System.out.print("Total: "+total + "\n\n");
 
 
-        //Imprimir categorias todo
-
-
-
+        int listSize = helperFuncs.imprimirLista(opciones);
 
         System.out.println("Selecciona:");
-        String buffer = scanner.nextLine();
+        int indexSelected = helperFuncs.checkIfInt(scanner.nextLine());
 
-
-        //Usuario escribio admin
-        if ((helperFuncs.compareWord(buffer, "admin")))
+        if (indexSelected > -1 && indexSelected < listSize)
         {
+            if (indexSelected == listSize-1)
+            {
+                System.out.println("Cerrando sesion");
+            }
+            else {
+                funcs.get(indexSelected).run();
+
+            }
 
 
         }
+
+
+
+
+
+
+
 
 
 
@@ -106,6 +130,23 @@ public class MenuPrincipal {
     }
 
 
+
+    public void buscarProductos(BundleUsuarioCarrito bundle)
+    {
+        helperFuncs.clearScreen();
+
+        UserInterfaceProducts display = new UserInterfaceProducts();
+
+        display.displayProducst(bundle);
+
+
+
+    }
+
+    public void pagar(BundleUsuarioCarrito bundle)
+    {
+        System.out.print("pagando");
+    }
 
     //public  static  void printWord(String word,String num,)
 

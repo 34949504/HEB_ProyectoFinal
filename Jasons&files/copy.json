@@ -1,0 +1,160 @@
+{
+  "Mascotas": {},
+  "Lácteos y Huevo": {
+    "Lacteos": {"ergerg": {
+      "descripcion": "",
+      "precio": 3,
+      "color": "",
+      "proveedor": "",
+      "cantidad": 23
+    }},
+    "Huevos": {}
+  },
+  "Jamones,Quesos y Deli": {},
+  "Jamones": {},
+  "Vinos,Licores y Cervezas": {},
+  "Despensa": {
+    "Untables y Miel": {
+      "Mermeladas": {},
+      "Cremas Untables": {},
+      "Cajetas y Dulces de Leche": {},
+      "Mieles": {},
+      "Jarabes": {}
+    },
+    "Comidas Instantáneas": {
+      "Listo para comer": {},
+      "Gravy": {},
+      "Variedad": {},
+      "Pures de papa": {},
+      "Pozoles y Menudo": {},
+      "Chilorios y Carnes": {},
+      "Chilaquiles": {}
+    },
+    "Aderezos y Salsas": {
+      "Vinagres": {},
+      "Aderezos": {},
+      "Mostazas": {},
+      "Cátsup": {},
+      "Mayonesas": {},
+      "Vinagretas": {},
+      "Salsas botaneras": {},
+      "Croutones": {},
+      "Salsas": {},
+      "Toppings": {},
+      "Chiles en Polvo": {},
+      "Salsas para Alitas": {}
+    },
+    "Azúcar y Sustitutos": {
+      "Azúcar": {},
+      "Sustitutos de Azúcar": {}
+    },
+    "Galletas": {},
+    "Desayuno y Cereales": {
+      "Cremas para Café": {},
+      "Granolas": {},
+      "Cereales": {},
+      "Barras de Cereal": {},
+      "Barras de Granola": {},
+      "Avenas": {},
+      "Harinas para Hot Cakes": {},
+      "Barras de Fruta": {},
+      "Atoles": {}
+    },
+    "Aceites y Mantecas": {
+      "Aceites de Oliva": {},
+      "Mantecas": {},
+      "Aceites Vegetales y de Semillas": {}
+    },
+    "Especias y Condimentos": {
+      "Moles y Adobos": {},
+      "Sazonadores": {},
+      "Sal": {}
+    },
+    "Salsas para Guisar": {"Salsas para guisar": {}},
+    "Alimentos enlatados y conservas": {
+      "Tomates": {},
+      "Salmones": {},
+      "Puré de Frutas": {},
+      "Ate": {},
+      "Frutas en almíbar": {},
+      "Chiles": {},
+      "Pepinillos": {},
+      "Atunes": {},
+      "Sardinas": {},
+      "Ensaladas de Atún": {},
+      "Vegetales": {},
+      "Camarones": {}
+    },
+    "Sopas y Pastas": {
+      "Sopas": {},
+      "Cremas": {},
+      "Pastas": {},
+      "Salsa para Pastas": {},
+      "Sopas Instantáneas": {}
+    },
+    "Desechables": {
+      "Vasos": {},
+      "Variedad": {},
+      "Banderillas": {},
+      "Servilletas": {},
+      "Platos": {},
+      "Palillos": {},
+      "Copas": {},
+      "Cubiertos": {},
+      "Recipientes y Contenedores": {},
+      "Toallas de Cocina": {},
+      "Papel Aluminio y Envolturas para Comida": {},
+      "Bolsas para Almacenar": {},
+      "Popotes": {}
+    },
+    "Arroz, Frijol y Semillas": {
+      "Frijol": {},
+      "Lentejas": {},
+      "Arroz": {},
+      "Chicharos": {},
+      "Garbanzo": {},
+      "Habas": {}
+    },
+    "Horneado y Repostería": {
+      "Polvos para Hornear": {},
+      "Decoraciones": {},
+      "Betunes": {},
+      "Colorantes": {},
+      "Harinas para Pastel": {},
+      "Toppings": {},
+      "Harinas": {},
+      "Saborizantes y extractos": {}
+    },
+    "Leche y Lácteos": {
+      "Bases para Pays": {},
+      "Relleno para Pays": {},
+      "Leche condensada": {},
+      "Galletas de Arroz": {},
+      "Azúcar Glas": {},
+      "Galletas": {},
+      "Leche evaporada": {},
+      "Media Crema": {},
+      "Saladas": {},
+      "Dulces": {}
+    },
+    "Caldos y Concentrados": {
+      "Tomate": {},
+      "Pollo": {},
+      "Vegetales": {}
+    },
+    "Café": {
+      "Cápsulas de Café": {},
+      "Café Soluble": {},
+      "Café en Grano y Molido": {}
+    }
+  },
+  "Carnes y Pescados": {},
+  "Frutas Y Verduras": {},
+  "Quesos Y Deli": {},
+  "Farmacia": {},
+  "Bebidas Y Snacks": {},
+  "Pan y Tortillas": {},
+  "Alimentos Congelados": {},
+  "Electrónica y Hogar": {},
+  "Cuidado Personal Y belleza": {}
+}

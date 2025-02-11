@@ -131,7 +131,7 @@ public class Categorias_helpFuncs {
     /**
      * Checa si el string esta en formato 'A'+'numero'. eg: A1,A23
      * @param str
-     * @return Regresa {@code true} si el formato es el correcto, else {@code false}
+     * @return Regresa {@code el numero} si el formato es el correcto, else {@code -1}
      */
     public static Integer extractNumberIfValid(String str) {
         Pattern pattern = Pattern.compile("^A(\\d+)$"); // Matches 'A' followed by digits

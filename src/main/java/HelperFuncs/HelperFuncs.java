@@ -4,6 +4,8 @@ AQUI PONEMOS FUNCIONES QUE PUEDES AYUDAR PARA NO SATURAR LAS OTRAS CLASES
 
 package HelperFuncs;
 
+import java.util.List;
+
 public class HelperFuncs {
 
 
@@ -67,5 +69,18 @@ public class HelperFuncs {
         for(int i = 0;i<20; ++i)
             System.out.print('\n');
     }
+
+
+    public int imprimirLista(List<String> array) {
+        int i = 0;
+
+        for (String element : array) {  // Loop through each element in the list
+            System.out.printf("(%d)%s\n",i,element);
+            i++;
+        }
+
+        return i; // Return the number of elements printed
+    }
+
 
 }

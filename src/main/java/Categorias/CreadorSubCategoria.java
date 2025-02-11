@@ -55,7 +55,7 @@ public class CreadorSubCategoria {
             int count = 0;
             int opcionesCount = 0;
 
-            String text; // Utilizado para almacenar las opciones de root, o de categoria, o de articulo
+            String text; // Utilizado para almacenar las opciones de root
 
             if (isOutsideRoot && !isInsideArticulo){
                 Collections.addAll(optList,"Agregar","Agregar Articulo","Importar archivo csv","Cambiar Nombre","Eliminar","Regresar");
@@ -246,6 +246,7 @@ public class CreadorSubCategoria {
 
                 JSONObject obj = new JSONObject();
 
+
                 /**SE GUARDAN LOS VALORES EN EL JSON OBJ **/
                 obj.put("precio",articuloPrecio);
                 obj.put("cantidad",articuloCantidad);
@@ -371,11 +372,11 @@ public class CreadorSubCategoria {
 
         boolean active = true;
 
-        System.out.println("Ejemplos: Dules,Salados  o Dulces");
+        System.out.println("Ejemplos: Dules;Salados  o Dulces");
         System.out.println("Entra el nombre de las categorias:");
         String subcategoria = scanner.nextLine();
 
-        String[] categoriasList = subcategoria.split(",");
+        String[] categoriasList = subcategoria.split(";");
 
 
         pointer = categoriasHelpFuncs.traverseStack(pointer,Stack_keys,stackCount,0);

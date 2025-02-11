@@ -52,57 +52,6 @@ public class CrearArticulosMetodo2 {
         readingCSV(path,json,stackKeys,stackCount);
 
 
-        /*
-
-        List<String> stackKeys = new ArrayList<>();
-        int stackCount;
-
-
-        boolean active = true;
-        boolean inRoot = true;
-
-        Iterator<String> keys = json.keys();
-
-        while (active)
-        {
-            if (!inRoot)
-            {
-                String str = "(A1)Importar archivo";
-                System.out.println(Categorias_helpFuncs.encapsulateText(str));
-
-            }
-            List<String> temporalList = new ArrayList<>();
-
-            int count = 0;
-            count = categoriasHelpFuncs.displayKeys(temporalList,keys,count);
-
-            String buffer;
-
-            while (true)
-            {
-                System.out.println("Selecciona:");
-
-                String input = scanner.nextLine();
-                int num = helperFuncs.checkIfInt(input);
-                int num2 = categoriasHelpFuncs.;
-
-                if (num >-1 && num < count)
-                {
-                    buffer = temporalList.get(num); // get key
-                    break;
-                }
-                else if (input.compareTo("A1") == 0)
-                {
-
-                }
-
-
-            }
-
-
-
-
-        }*/
 
 
 

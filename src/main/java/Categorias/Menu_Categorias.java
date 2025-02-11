@@ -20,6 +20,8 @@ public class Menu_Categorias {
     public void menu(String str)
     {
 
+
+
         JSONObject json;
 
         if (!categoriasHelpFuncs.checkIfJasonEmpty(str))
