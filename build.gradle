@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.yourpackage'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.12.0'  // example dependency
+    implementation 'org.json:json:20210307' // JSON dependency
+    implementation group: 'com.opencsv', name: 'opencsv', version: '5.10'
+    implementation group: 'de.vandermeer', name: 'asciitable', version: '0.3.2'
+
+
+}
+
+test {
+    useJUnitPlatform()
+}

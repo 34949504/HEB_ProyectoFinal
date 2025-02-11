@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import DisplayProducts.UserInterfaceProducts;
 
-
+import de.vandermeer.asciitable.AsciiTable;
 
 
 
@@ -62,7 +62,7 @@ public class MenuPrincipal {
 
 
 
-        imprimirListas(carrito,cantidad,precio,listLength);
+        //imprimirListas(bundle_usuario,listLength);
         System.out.print("Total: "+total + "\n\n");
 
 
@@ -109,25 +109,20 @@ public class MenuPrincipal {
         return 0;
     }
 
-    public void imprimirListas(List<String> carrito,List<Integer> cantidad, List<Float> precio, int length) {
-
-        System.out.printf("%-15s %-10s %-10s\n", "Carrito", "Cantidad", "Precio");
-        System.out.print("----------------------------------\n");
-
-        if (length > 0) {
-
-            for (int i = 0; i < length; i++) {
-
-                System.out.printf("%-15s %-10d %-10.2f\n", carrito.get(i), cantidad.get(i), precio.get(i));
-
-            }
-
-        }
-        else {
-            System.out.printf("%-15s %-10s %-10s\n", "None", "None", "None");
-
-            System.out.print('\n');}
-    }
+//    public void imprimirListas(BundleUsuarioCarrito bundleUser, int length) {
+//
+//
+//
+//        AsciiTable at = new AsciiTable();
+//        at.addRule();
+//        at.addRow("Artículos", "Cantidad", "Precio");
+//        at.addRule();
+//        for (int i = 0; i < length; i++) {
+//            at.addRow(bundleUser.carrito.get(i), bundleUser.cantidad.get(i), bundleUser.precio.get(i));
+//            at.addRule();
+//        }
+//
+//    }
 
 
 

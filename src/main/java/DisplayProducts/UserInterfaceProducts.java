@@ -125,7 +125,7 @@ public class UserInterfaceProducts {
 
             else if (opcion.compareTo("Salir") == 0)
             {
-
+                active  =false;
 
             }
 
@@ -145,15 +145,11 @@ public class UserInterfaceProducts {
 
             }
 
-            else if (opcion.compareTo("Salir") == 0)
-            {
-
-
-            }
 
             else if (opcion.compareTo("Seleccionar cantidad") == 0)
             {
-
+                helperFuncs.clearScreen();
+                seleccionarCantidad(bundleUser,pointer,stackKeys,pointersListCount);
 
             }
 
@@ -377,6 +373,78 @@ public class UserInterfaceProducts {
         }
         str.deleteCharAt(str.length()-1);
         return str.toString();
+    }
+
+
+    private void seleccionarCantidad(BundleUsuarioCarrito bundleUser,JSONObject pointer,List<String> stackKeys,int pointerCount)
+    {
+        String produto = stackKeys.get(pointerCount-1);
+        System.out.printf("Product es %s\n",produto);
+        int productoExist = checkIfproductoInList(bundleUser,produto);
+        System.out.printf("exist  es %d\n",productoExist);
+
+
+        System.out.println(produto);
+        System.out.print("Cantidad:");
+
+        int cantidadUser = helperFuncs.checkIfInt(scanner.nextLine());
+        int stock = pointer.getInt("cantidad");
+
+        System.out.printf("stock es %d\n",stock);
+
+        int cost = pointer.getInt("precio");
+        System.out.printf("Cost es %d\n",cost);
+
+
+
+        float total = cost * cantidadUser;
+
+        System.out.printf("total es %f\n",total);
+
+
+
+        if (cantidadUser > -1)
+        {
+
+            if (cantidadUser > stock)
+            {
+                System.out.printf("Por el momento no tenemos %d de %s",cantidadUser,produto);
+                cantidadUser = stock;
+            }
+            if (productoExist == -1) {
+                bundleUser.carrito.add(produto);
+                bundleUser.cantidad.add(cantidadUser);
+                bundleUser.precio.add(total);
+                System.out.println("Wasssa");
+
+            }else {
+
+                bundleUser.carrito.set(productoExist,produto);
+                bundleUser.cantidad.set(productoExist,cantidadUser);
+                bundleUser.precio.set(productoExist,total);
+
+            }
+
+
+        }
+
+
+    }
+
+
+    private int checkIfproductoInList(BundleUsuarioCarrito bundleUser,String producto)
+    {
+        int i = 0;
+
+        for (String element: bundleUser.carrito)
+        {
+            if (element.compareTo(producto) == 0)
+                return i;
+
+            ++i;
+        }
+
+        return -1;
     }
 
 
