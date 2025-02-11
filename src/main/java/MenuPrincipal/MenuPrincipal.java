@@ -56,9 +56,9 @@ public class MenuPrincipal {
         while (active)
         {
 
-        //File file = fileFuncs.checkIfFileExists(fileName);
-        //StringBuilder string = fileFuncs.readFile(file);
-        //menuCategorias.menu(string.toString());
+        File file = fileFuncs.checkIfFileExists(fileName);
+        StringBuilder string = fileFuncs.readFile(file);
+        menuCategorias.menu(string.toString());
 
 
 
