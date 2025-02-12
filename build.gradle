@@ -16,8 +16,14 @@ dependencies {
     implementation group: 'de.vandermeer', name: 'asciitable', version: '0.3.2'
 
 
+
 }
 
 test {
     useJUnitPlatform()
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+

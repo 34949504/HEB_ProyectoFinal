@@ -4,7 +4,13 @@ AQUI PONEMOS FUNCIONES QUE PUEDES AYUDAR PARA NO SATURAR LAS OTRAS CLASES
 
 package HelperFuncs;
 
+import MenuPrincipal.BundleUsuarioCarrito;
+import de.vandermeer.asciitable.AsciiTable;
+
 import java.util.List;
+
+import de.vandermeer.asciitable.AsciiTable;
+
 
 public class HelperFuncs {
 
@@ -83,4 +89,62 @@ public class HelperFuncs {
     }
 
 
+
+
+    public void imprimirListasCarrito(BundleUsuarioCarrito bundleUser, int length,boolean putIndices) {
+
+
+
+        AsciiTable at = new AsciiTable();
+        at.addRule();
+
+        if (!putIndices)
+            at.addRow("Artículos", "Cantidad", "Precio");
+        else
+            at.addRow("Índices","Artículos", "Cantidad", "Precio");
+
+        at.addRule();
+
+
+
+        for (int i = 0; i < length; i++) {
+
+            if (!putIndices) {
+                at.addRow(bundleUser.carrito.get(i), bundleUser.cantidad.get(i), bundleUser.precio.get(i));
+
+
+            }
+
+            else {
+                at.addRow(i, bundleUser.carrito.get(i), bundleUser.cantidad.get(i), bundleUser.precio.get(i));
+
+            }
+
+
+            at.addRule();
+        }
+        if (bundleUser.length>0){
+            String total = "Total: "+bundleUser.total;
+            if (!putIndices)
+                at.addRow("", "", total);
+            else
+                at.addRow("", "","", total);
+            at.addRule();
+        }
+
+
+
+
+
+
+        String tableString = at.render();
+        System.out.println(tableString);
+
+        System.out.println("\n");
+
+
+
+    }
+
 }
+

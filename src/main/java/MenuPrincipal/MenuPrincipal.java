@@ -2,21 +2,17 @@ package MenuPrincipal;/*
 Aqui es donde vamos a estar llamando todo
  */
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 import Categorias.Menu_Categorias;
 import FileClasses.FileFuncs;
 import HelperFuncs.HelperFuncs;
-import org.json.JSONObject;
 
 import DisplayProducts.UserInterfaceProducts;
 
-import de.vandermeer.asciitable.AsciiTable;
 
 
 
@@ -38,17 +34,22 @@ public class MenuPrincipal {
         List<String> carrito = new ArrayList<String>();
         List<Integer> cantidad = new ArrayList<Integer>();
         List<Float> precio = new ArrayList<Float>();
-        int listLength = 0;
-        int total = 0;
-        
+
+        List<String> paths = new ArrayList<String>();
+        List<Integer> stock = new ArrayList<Integer>();
+
+
+
+
         String fileName = "Jasons&files/Productos.json";
-        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito,cantidad,precio);
+        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito, cantidad,precio,0,0);
+        BundleProductosCarritos bundle_carritos = new BundleProductosCarritos(paths,stock);
 
 
 
         List<String> opciones = new ArrayList<>(Arrays.asList("Buscar productos","Pagar","Cerrar sesión")); // Cerrar sesion tiene que ser el ultimo elemento
         List<Runnable> funcs = Arrays.asList(
-                () -> buscarProductos(bundle_usuario)  // method with 2 args
+                () -> buscarProductos(bundle_usuario,bundle_carritos)  // method with 2 args
                 //Main::method2,  // method with no args
                 //() -> method3(42)  // method with 1 arg
         );
@@ -56,14 +57,13 @@ public class MenuPrincipal {
         while (active)
         {
 
-        File file = fileFuncs.checkIfFileExists(fileName);
-        StringBuilder string = fileFuncs.readFile(file);
-        menuCategorias.menu(string.toString());
+//        File file = fileFuncs.checkIfFileExists(fileName);
+//        StringBuilder string = fileFuncs.readFile(file);
+//        menuCategorias.menu(string.toString());
 
 
 
-        //imprimirListas(bundle_usuario,listLength);
-        System.out.print("Total: "+total + "\n\n");
+        helperFuncs.imprimirListasCarrito(bundle_usuario,bundle_usuario.length,false);
 
 
         int listSize = helperFuncs.imprimirLista(opciones);
@@ -109,30 +109,15 @@ public class MenuPrincipal {
         return 0;
     }
 
-//    public void imprimirListas(BundleUsuarioCarrito bundleUser, int length) {
-//
-//
-//
-//        AsciiTable at = new AsciiTable();
-//        at.addRule();
-//        at.addRow("Artículos", "Cantidad", "Precio");
-//        at.addRule();
-//        for (int i = 0; i < length; i++) {
-//            at.addRow(bundleUser.carrito.get(i), bundleUser.cantidad.get(i), bundleUser.precio.get(i));
-//            at.addRule();
-//        }
-//
-//    }
 
 
-
-    public void buscarProductos(BundleUsuarioCarrito bundle)
+    public void buscarProductos(BundleUsuarioCarrito bundleUser,BundleProductosCarritos bundleProductos)
     {
         helperFuncs.clearScreen();
 
         UserInterfaceProducts display = new UserInterfaceProducts();
 
-        display.displayProducst(bundle);
+        display.displayProducst(bundleUser,bundleProductos);
 
 
 
