@@ -47,7 +47,6 @@ public class UserInterfaceProducts {
 
         while (active)
         {
-            //System.out.println(displayPath(stackKeys,pointersListCount));
 
 
             flags.isInsideArticulo = false;
@@ -62,10 +61,12 @@ public class UserInterfaceProducts {
 
             helperFuncs.imprimirListasCarrito(bundleUser,bundleUser.length,false);
 
+            System.out.println(displayPath(stackKeys,stackCount));
+            System.out.println();
 
             int listSize = 0;
             if(!flags.isInsideArticulo)
-                 listSize = displayKeys(list,keys);
+                 listSize = displayKeys(list,keys,pointer);
             else
                 displayProduct(pointer,stackKeys,keys,stackCount);
 
@@ -147,6 +148,15 @@ public class UserInterfaceProducts {
                 agregar(bundleUser,bundleProducts,stackKeys,stackCount,pointer,flags);
             }
 
+            else if (opcion.compareTo("RegresarInicio") == 0)
+            {
+                pointer = json;
+                if (stackCount > 0) {
+                    stackKeys.subList(0, stackCount).clear();
+                }
+                stackCount = 0;
+            }
+
             helperFuncs.clearScreen();
 
 
@@ -156,14 +166,25 @@ public class UserInterfaceProducts {
 
     }
 
-    public int displayKeys(List<String> list, Iterator<String> keys)
+    public int displayKeys(List<String> list, Iterator<String> keys,JSONObject pointer)
     {
 
         int count = 0;
 
         while (keys.hasNext()) {
+            JSONObject p = pointer;
+
             String key = keys.next();
-            System.out.printf("(%d)%s\n",count,key);
+            System.out.printf("(%d)%s",count,key);
+            try{
+                p = p.getJSONObject(key);
+                float precio = p.getFloat("precio");
+                System.out.printf(" -> $%.2f\n",precio);
+            }catch (Exception e)
+            {
+                System.out.print("\n");
+            }
+
 
             list.add(key);
             count++;
@@ -191,15 +212,15 @@ public class UserInterfaceProducts {
         
         else if (!flags.isInsideRoot && !flags.isInsideArticulo)
         {
-            text = String.format("*Opciones*\n(A%d)Regresar\n(A%d)Quitar\n(A%d)Agregar a carrito\n", opcionesCount++,opcionesCount++,opcionesCount++);
-            Collections.addAll(optList,"Regresar","Quitar","Agregar");
+            text = String.format("*Opciones*\n(A%d)Regresar\n(A%d)Quitar\n(A%d)Agregar a carrito\n(A%d)Regresar al inicio\n", opcionesCount++,opcionesCount++,opcionesCount++,opcionesCount++);
+            Collections.addAll(optList,"Regresar","Quitar","Agregar","RegresarInicio");
 
         }
         else if (flags.isInsideArticulo)
         {
 
-            text = String.format("*Opciones*\n(A%d)Regresar\n(A%d)Quitar\n(A%d)Agregar a carrito\n", opcionesCount++,opcionesCount++,opcionesCount++);
-            Collections.addAll(optList,"Regresar","Quitar","Agregar");
+            text = String.format("*Opciones*\n(A%d)Regresar\n(A%d)Quitar\n(A%d)Agregar a carrito\n(A%d)Regresar al inicio\n", opcionesCount++,opcionesCount++,opcionesCount++,opcionesCount++);
+            Collections.addAll(optList,"Regresar","Quitar","Agregar","RegresarInicio");
 
 
         }else
@@ -249,7 +270,7 @@ public class UserInterfaceProducts {
 
                             case "f":
                                 float price = otherPointer.getFloat(key);
-                                System.out.printf("%s es $%f\n",myArray[i].toUpperCase(),price);
+                                System.out.printf("%s es $%.2f\n",myArray[i].toUpperCase(),price);
                                 break;
                             case "s":
                                 String str = otherPointer.getString(key);
@@ -285,13 +306,17 @@ public class UserInterfaceProducts {
 
     private String displayPath(List<String> stackKeys,int stackCount)
     {
-        StringBuilder str = new StringBuilder("Root/");
+        StringBuilder str = new StringBuilder("Root -> ");
         for (int i = 0; i < stackCount;++i)
         {
             str.append(stackKeys.get(i));
-            str.append('/');
+            str.append(" -> ");
         }
         str.deleteCharAt(str.length()-1);
+        str.deleteCharAt(str.length()-1);
+        str.deleteCharAt(str.length()-1);
+
+
         return str.toString();
     }
 
