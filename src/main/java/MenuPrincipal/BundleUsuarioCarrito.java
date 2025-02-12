@@ -12,19 +12,19 @@ public class BundleUsuarioCarrito {
 
 
 
-    public List<String> carrito;
-    public List<Integer> cantidad;
-    public List<Float> precio;
+    public List<String> carritoLista;
+    public List<Integer> cantidadLista;
+    public List<Float> precioLista;
 
 
     public int length;
     public float total;
 
 
-    public BundleUsuarioCarrito(List<String> carrito, List<Integer> cantidad,List<Float> precio,int length,float total) {
-        this.carrito = carrito;
-        this.cantidad = cantidad;
-        this.precio = precio;
+    public BundleUsuarioCarrito(List<String> carritoLista, List<Integer> cantidadLista,List<Float> precioLista,int length,float total) {
+        this.carritoLista = carritoLista;
+        this.cantidadLista = cantidadLista;
+        this.precioLista = precioLista;
         this.length = length;
         this.total = total;
 

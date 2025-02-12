@@ -307,7 +307,7 @@ public class UserInterfaceProducts {
     {
         int i = 0;
 
-        for (String element: bundleUser.carrito)
+        for (String element: bundleUser.carritoLista)
         {
             if (element.compareTo(producto) == 0)
                 return i;
@@ -344,18 +344,18 @@ private void quitar(BundleUsuarioCarrito bundleUser,
             cantidad = helperFuncs.checkIfInt(scanner.nextLine());
 
             //int cantidad1 = bundleUser.cantidad.get(isProductOnList) +cantidad;
-            if (cantidad >= bundleUser.cantidad.get(isProductOnList)) //**LA CANTIDAD QUE QUIERE QUITAR SUPERA O ES IGUAL A LO QUE TIENE EL USER**/
+            if (cantidad >= bundleUser.cantidadLista.get(isProductOnList)) //**LA CANTIDAD QUE QUIERE QUITAR SUPERA O ES IGUAL A LO QUE TIENE EL USER**/
             {
 
-                bundleUser.total -= bundleUser.precio.get(isProductOnList);
+                bundleUser.total -= bundleUser.precioLista.get(isProductOnList);
                 quitarcosasBundle(bundleUser,bundleProducts,isProductOnList);
                 bundleUser.length -= 1;
 
             }else if (cantidad > 0)
             {
                 precio = pricePer1pz * cantidad;
-                float precioDefinitivo =   bundleUser.precio.get(isProductOnList) - precio;
-                modificarcosasBundle(bundleUser,precioDefinitivo,bundleUser.cantidad.get(isProductOnList)-cantidad,isProductOnList);
+                float precioDefinitivo =   bundleUser.precioLista.get(isProductOnList) - precio;
+                modificarcosasBundle(bundleUser,precioDefinitivo,bundleUser.cantidadLista.get(isProductOnList)-cantidad,isProductOnList);
                 bundleUser.total -= precio;
             }
         }
@@ -379,22 +379,22 @@ private void quitar(BundleUsuarioCarrito bundleUser,
 
 
             //** LO QUE QUIERE AGREGAR  + LO QUE TIENE, SUPERA INSTOCK **//
-            if (cantidad >= bundleUser.cantidad.get(indice))
+            if (cantidad >= bundleUser.cantidadLista.get(indice))
             {
                 // for (int i = 0; i<)
-                bundleUser.total -= bundleUser.precio.get(indice);
+                bundleUser.total -= bundleUser.precioLista.get(indice);
                 quitarcosasBundle(bundleUser,bundleProducts,indice);
                 bundleUser.length -= 1;
 
             }else if (cantidad > 0) {
 
-                float pricePer1pz = bundleUser.precio.get(indice) / bundleUser.cantidad.get(indice);
+                float pricePer1pz = bundleUser.precioLista.get(indice) / bundleUser.cantidadLista.get(indice);
 
                 precio = pricePer1pz * cantidad;
-                float precioDefinitivo =   bundleUser.precio.get(indice) - precio;
+                float precioDefinitivo =   bundleUser.precioLista.get(indice) - precio;
 
 
-                modificarcosasBundle(bundleUser,precioDefinitivo,bundleUser.cantidad.get(indice)-cantidad,indice);
+                modificarcosasBundle(bundleUser,precioDefinitivo,bundleUser.cantidadLista.get(indice)-cantidad,indice);
                 bundleUser.total -= precio;
 
             }
@@ -451,20 +451,20 @@ private void quitar(BundleUsuarioCarrito bundleUser,
             }
             else if (cantidad>0){ //**PRODUCT IS IN LIST **//
 
-                int cantidad1 = bundleUser.cantidad.get(isProductOnList) +cantidad;
+                int cantidad1 = bundleUser.cantidadLista.get(isProductOnList) +cantidad;
                 if (cantidad1>inStock) //**LA CANTIDAD QUE QUIERE AGREGAR SUPERA LO QUE HAY EN STOCK **/
                 {
                         System.out.printf("Lo sentimos, la cantidad que has pedido y lo que tienes hasta el momento,\nsupera la cantidad que tenemos en nuestro stock",cantidad);
-                        int cantidad2 =    inStock - bundleUser.cantidad.get(isProductOnList);
+                        int cantidad2 =    inStock - bundleUser.cantidadLista.get(isProductOnList);
                         precio = pricePer1pz *  cantidad2;
-                        float precioDefinitivo = bundleUser.precio.get(isProductOnList) + precio; // SUMAR LO QUE TIENE Y LO QUE SE PUEDE AGREGAR
+                        float precioDefinitivo = bundleUser.precioLista.get(isProductOnList) + precio; // SUMAR LO QUE TIENE Y LO QUE SE PUEDE AGREGAR
                         modificarcosasBundle(bundleUser,precioDefinitivo,inStock,isProductOnList);
 
                         bundleUser.total += precio;
                 }else
                 {
                     precio = pricePer1pz * cantidad;
-                    float precioDefinitivo = precio + bundleUser.precio.get(isProductOnList);
+                    float precioDefinitivo = precio + bundleUser.precioLista.get(isProductOnList);
 
                     //CANTIDAD1  = LO QUE EL USER TIENE + LO QUE QUIERE AGREGAR
                     modificarcosasBundle(bundleUser,precioDefinitivo,cantidad1,isProductOnList);
@@ -487,7 +487,7 @@ private void quitar(BundleUsuarioCarrito bundleUser,
                 System.out.println("Entra la cantidad a agregar:");
                 cantidad = helperFuncs.checkIfInt(scanner.nextLine());
 
-                int cantidad1 = bundleUser.cantidad.get(indice) + cantidad;
+                int cantidad1 = bundleUser.cantidadLista.get(indice) + cantidad;
                 int inStock = bundleProducts.howManyInStock.get(indice);
 
 
@@ -495,22 +495,22 @@ private void quitar(BundleUsuarioCarrito bundleUser,
                 if (cantidad1 > inStock)
                 {
                    // for (int i = 0; i<)
-                    float pricePer1pz = bundleUser.precio.get(indice) / bundleUser.cantidad.get(indice);
+                    float pricePer1pz = bundleUser.precioLista.get(indice) / bundleUser.cantidadLista.get(indice);
 
                     System.out.printf("Lo sentimos, la cantidad que has pedido y lo que tienes hasta el momento,\nsupera la cantidad que tenemos en nuestro stock",cantidad);
-                    int cantidad2 =    inStock - bundleUser.cantidad.get(indice);
+                    int cantidad2 =    inStock - bundleUser.cantidadLista.get(indice);
                     precio = pricePer1pz *  cantidad2;
-                    float precioDefinitivo = bundleUser.precio.get(indice) + precio; // SUMAR LO QUE TIENE Y LO QUE SE PUEDE AGREGAR
+                    float precioDefinitivo = bundleUser.precioLista.get(indice) + precio; // SUMAR LO QUE TIENE Y LO QUE SE PUEDE AGREGAR
                     modificarcosasBundle(bundleUser,precioDefinitivo,inStock,indice);
 
                     bundleUser.total += precio;
 
                 }else if (cantidad>0) {
 
-                    float pricePer1pz = bundleUser.precio.get(indice) / bundleUser.cantidad.get(indice);
+                    float pricePer1pz = bundleUser.precioLista.get(indice) / bundleUser.cantidadLista.get(indice);
 
                     precio = pricePer1pz * cantidad;
-                    float precioDefinitivo = precio + bundleUser.precio.get(indice);
+                    float precioDefinitivo = precio + bundleUser.precioLista.get(indice);
 
                     //CANTIDAD1  = LO QUE EL USER TIENE + LO QUE QUIERE AGREGAR
                     modificarcosasBundle(bundleUser,precioDefinitivo,cantidad1,indice);
@@ -537,9 +537,9 @@ private void quitar(BundleUsuarioCarrito bundleUser,
     private void agregarCosasalBundle(BundleUsuarioCarrito bundleUser,float price,int cantidad,String producto,
                                       BundleProductosCarritos bundleProduts,String path, int inStock)
     {
-        bundleUser.precio.add(price);
-        bundleUser.cantidad.add(cantidad);
-        bundleUser.carrito.add(producto);
+        bundleUser.precioLista.add(price);
+        bundleUser.cantidadLista.add(cantidad);
+        bundleUser.carritoLista.add(producto);
 
         bundleProduts.articulosPath.add(path);
         bundleProduts.howManyInStock.add(inStock);
@@ -549,15 +549,15 @@ private void quitar(BundleUsuarioCarrito bundleUser,
     private void modificarcosasBundle(BundleUsuarioCarrito bundleUser,float price,int cantidad,
                                       int index)
     {
-        bundleUser.precio.set(index,price);
-        bundleUser.cantidad.set(index,cantidad);
+        bundleUser.precioLista.set(index,price);
+        bundleUser.cantidadLista.set(index,cantidad);
 
     }
     private void quitarcosasBundle(BundleUsuarioCarrito bundleUser, BundleProductosCarritos bundleProductos,int indice)
     {
-        bundleUser.carrito.remove(indice);
-        bundleUser.cantidad.remove(indice);
-        bundleUser.precio.remove(indice);
+        bundleUser.carritoLista.remove(indice);
+        bundleUser.cantidadLista.remove(indice);
+        bundleUser.precioLista.remove(indice);
 
         bundleProductos.howManyInStock.remove(indice);
         bundleProductos.articulosPath.remove(indice);

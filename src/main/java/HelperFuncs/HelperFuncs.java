@@ -107,13 +107,13 @@ public class HelperFuncs {
         for (int i = 0; i < length; i++) {
 
             if (!putIndices) {
-                at.addRow(bundleUser.carrito.get(i), bundleUser.cantidad.get(i), bundleUser.precio.get(i));
+                at.addRow(bundleUser.carritoLista.get(i), bundleUser.cantidadLista.get(i), bundleUser.precioLista.get(i));
 
 
             }
 
             else {
-                at.addRow(i, bundleUser.carrito.get(i), bundleUser.cantidad.get(i), bundleUser.precio.get(i));
+                at.addRow(i, bundleUser.carritoLista.get(i), bundleUser.cantidadLista.get(i), bundleUser.precioLista.get(i));
 
             }
 
