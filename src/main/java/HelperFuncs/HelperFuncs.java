@@ -64,9 +64,6 @@ public class HelperFuncs {
     }
 
 
-
-
-
     /**
      * Limpia la pantalla con \n 20 veces
      */
@@ -131,12 +128,6 @@ public class HelperFuncs {
                 at.addRow("", "","", total);
             at.addRule();
         }
-
-
-
-
-
-
         String tableString = at.render();
         System.out.println(tableString);
 

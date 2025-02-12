@@ -33,21 +33,13 @@ public class UserInterfaceProducts {
         StringBuilder string_build = fileFuncs.readFile(file);
 
         JSONObject json = new JSONObject(string_build.toString());
-
-
         Flags flags = new Flags();
 
 
-
         List<String> stackKeys = new ArrayList<>();
-
-        //List<JSONObject> pointersList = new ArrayList<>();
-
-        int pointersListCount = 0;
+        int stackCount = 0;
         JSONObject pointer = json;
-
         boolean active = true;
-
 
         Iterator<String> keys = json.keys();
 
@@ -63,7 +55,7 @@ public class UserInterfaceProducts {
             List<String> optList = new ArrayList<>(); // Guardar texto de las opciones
 
 
-            modifyFlags(flags,pointersListCount,pointer);
+            modifyFlags(flags,stackCount,pointer);
 
             List<String> list  = new ArrayList<>(); // Guardar las keys de las categorias
 
@@ -75,11 +67,10 @@ public class UserInterfaceProducts {
             if(!flags.isInsideArticulo)
                  listSize = displayKeys(list,keys);
             else
-                displayProduct(pointer,stackKeys,keys,pointersListCount);
+                displayProduct(pointer,stackKeys,keys,stackCount);
 
             int opcionesCount = printingFlags(flags,optList);
             
-            System.out.printf("Pointer count is %d",pointersListCount);
 
 
 
@@ -99,7 +90,7 @@ public class UserInterfaceProducts {
 
                     stackKeys.add(categoria);
                     //pointersList.add(pointer);
-                    pointersListCount++;
+                    stackCount++;
 
                     pointer = traverseKeys(categoria, pointer);
 
@@ -123,7 +114,7 @@ public class UserInterfaceProducts {
             if (opcion.compareTo("Quitar") == 0)
             {
 
-                quitar(bundleUser,bundleProducts,stackKeys,pointersListCount,pointer,flags);
+                quitar(bundleUser,bundleProducts,stackKeys,stackCount,pointer,flags);
 
             }
 
@@ -140,26 +131,20 @@ public class UserInterfaceProducts {
                 System.out.println("Regresamdo");
 
 
-                if (pointersListCount >0) {
-                    --pointersListCount;
-                    stackKeys.remove(pointersListCount);}
+                if (stackCount >0) {
+                    --stackCount;
+                    stackKeys.remove(stackCount);}
 
 
 //                pointer = regresar(pointersList,pointer,pointersListCount,stackKeys,json);
-                  pointer = categoriasHelpFuncs.traverseStack(json,stackKeys,pointersListCount,0);
+                  pointer = categoriasHelpFuncs.traverseStack(json,stackKeys,stackCount,0);
 
 
             }
 
-
-            else if (opcion.compareTo("Seleccionar cantidad") == 0)
-            {
-                seleccionarCantidad(bundleUser,bundleProducts,pointer,stackKeys,pointersListCount);
-
-            }
             else if (opcion.compareTo("Agregar") == 0)
             {
-                agregar(bundleUser,bundleProducts,stackKeys,pointersListCount,pointer,flags);
+                agregar(bundleUser,bundleProducts,stackKeys,stackCount,pointer,flags);
             }
 
             helperFuncs.clearScreen();
@@ -167,29 +152,9 @@ public class UserInterfaceProducts {
 
             keys = pointer.keys();
 
-
-
-
-
-
-
-
-
         }
 
-
-
-
-
-
-
-
-
-
-
     }
-
-
 
     public int displayKeys(List<String> list, Iterator<String> keys)
     {
@@ -202,11 +167,8 @@ public class UserInterfaceProducts {
 
             list.add(key);
             count++;
-
-
         }
         return count;
-
     }
 
     public JSONObject traverseKeys(String categoria,JSONObject pointer)
@@ -215,8 +177,7 @@ public class UserInterfaceProducts {
         return pointer;
 
     }
-    
-    
+
     private int printingFlags(Flags flags,List<String> optList)
             
     {
@@ -242,51 +203,15 @@ public class UserInterfaceProducts {
 
 
         }else
-        {
             text = "";
-        }
 
         System.out.println(Categorias_helpFuncs.encapsulateText(text)); //Imprime opciones en una caja
         return opcionesCount;
-
-
-
-
     }
-
-
-    private void printingBundle(BundleUsuarioCarrito bundle)
-    {
-
-        System.out.print("Artículos: [");
-        for (String element : bundle.carrito) {
-            System.out.printf("  %s   ,",element);  // Prints each item in the carrito list
-        }
-        System.out.print("]\n");
-
-
-        System.out.print("Cantidad: [");
-        for (Integer element : bundle.cantidad) {
-            System.out.printf("  %d   ,",element);  // Prints each item in the carrito list
-        }
-        System.out.print("]\n");
-
-
-        System.out.print("Precios: [");
-        for (Float element : bundle.precio) {
-            System.out.printf("  %f   ,",element);  // Prints each item in the carrito list
-        }
-        System.out.print("]\n\n");
-
-
-
-    }
-
 
 
     private void modifyFlags(Flags flags, int pointerCount,JSONObject pointer)
     {
-
         flags.isInsideRoot = pointerCount <= 0;
 
         Iterator<String> somekeys = pointer.keys();
@@ -298,11 +223,7 @@ public class UserInterfaceProducts {
             {
                 flags.isInsideArticulo = true;
             }
-
         }
-
-
-
     }
 
     private void displayProduct(JSONObject pointer,List<String> stackKeys, Iterator<String> keys,int pointerCounter) {
@@ -350,7 +271,6 @@ public class UserInterfaceProducts {
 
     private JSONObject regresar(List<JSONObject> pointers,JSONObject pointer,int pointerCount,List<String> stackKeys,JSONObject json)
     {
- //       [hola,hola,hola]
         if (pointerCount > 0) { // Only go back if not at root
               // Move back one step
             pointer = pointers.get(pointerCount); // Get previous pointer
@@ -360,7 +280,6 @@ public class UserInterfaceProducts {
             pointer = json; // If at root, reset to json
         }
 
-        System.out.println("Pointer count right now is " + pointerCount);
         return pointer;
     }
 
@@ -369,88 +288,13 @@ public class UserInterfaceProducts {
         StringBuilder str = new StringBuilder("Root/");
         for (int i = 0; i < stackCount;++i)
         {
-
             str.append(stackKeys.get(i));
             str.append('/');
-
         }
         str.deleteCharAt(str.length()-1);
         return str.toString();
     }
 
-
-    /**
-     *
-     *
-     *
-     * @param bundleUser
-     * @param bundleProductos
-     * @param pointer
-     * @param stackKeys
-     * @param pointerCount
-     */
-    private void seleccionarCantidad(BundleUsuarioCarrito bundleUser,BundleProductosCarritos bundleProductos,JSONObject pointer,List<String> stackKeys,int pointerCount)
-    {
-        String produto = stackKeys.get(pointerCount-1);
-        int productoExist = checkIfproductoInList(bundleUser,produto); //Regresa el indice del producto o -1
-
-
-        System.out.println(produto);
-        System.out.print("Cantidad:");
-
-        int canditad_a_Agregar = helperFuncs.checkIfInt(scanner.nextLine());
-        int stock = pointer.getInt("cantidad");
-        //int cantidadQueTieneElUsuario = bundleUser.cantidad.get()
-
-        if (stock <= 0){
-            System.out.printf("Lo lamentamos, el día de hoy no tenemos %s\n",produto);
-            return;}
-
-        float cost = pointer.getFloat("precio");
-        float precio_a_Agregar = cost * canditad_a_Agregar;
-
-        if (canditad_a_Agregar > -1)
-        {
-
-            if (canditad_a_Agregar > stock)
-            {
-                bundleUser.total -= bundleUser.precio.get(productoExist);
-                System.out.printf("Por el momento no tenemos %d de %s",canditad_a_Agregar,produto);
-
-                bundleUser.total += stock*cost;
-                return;
-
-
-            }
-
-            /*Articulo no esta en la lista */
-            if (productoExist == -1) {
-                bundleUser.carrito.add(produto);
-                bundleUser.cantidad.add(canditad_a_Agregar);
-                bundleUser.precio.add(precio_a_Agregar);
-
-                bundleUser.length += 1;
-                bundleUser.total += precio_a_Agregar;
-
-                String articuloPath = convertStackKeysToString(stackKeys,pointerCount);
-
-                bundleProductos.articulosPath.add(articuloPath);
-                bundleProductos.howManyInStock.add(stock);
-
-            }else {
-                /*El articulo ya esta en la lista, entonces solo modificar  en dado lugar eso */
-                bundleUser.cantidad.set(productoExist,canditad_a_Agregar);
-                bundleUser.precio.set(productoExist,precio_a_Agregar);
-
-                //total -=
-
-            }
-
-
-        }
-
-
-    }
 
     /**
      * Checa si el producto esta andetro de la lista carrti<br>
@@ -470,7 +314,6 @@ public class UserInterfaceProducts {
 
             ++i;
         }
-
         return -1;
     }
 
@@ -481,13 +324,8 @@ private void quitar(BundleUsuarioCarrito bundleUser,
                     List<String> stackKeys,int stackCount,
                     JSONObject pointer,Flags flags)
 {
-
-
-
     int cantidad;
     float precio;
-
-
 
     if (flags.isInsideArticulo)
     {
@@ -497,14 +335,9 @@ private void quitar(BundleUsuarioCarrito bundleUser,
 
         int isProductOnList = checkIfproductoInList(bundleUser,producto_name);
 
-
-        //TODO checar si el user a proposito pone un negativo
         if (isProductOnList == -1) //** PRODUCT IS NOT IN LIST **//
-        {
-
             return;
 
-        }
         else{ //**PRODUCT IS IN LIST **//
 
             System.out.println("Entra la cantidad a quitar al carrito:");
@@ -520,24 +353,12 @@ private void quitar(BundleUsuarioCarrito bundleUser,
 
             }else if (cantidad > 0)
             {
-
-
                 precio = pricePer1pz * cantidad;
                 float precioDefinitivo =   bundleUser.precio.get(isProductOnList) - precio;
-
-
                 modificarcosasBundle(bundleUser,precioDefinitivo,bundleUser.cantidad.get(isProductOnList)-cantidad,isProductOnList);
                 bundleUser.total -= precio;
-
-
             }
-
-
-
         }
-
-
-
     }
     //** USER IS NOT INSIDE A PRODUCNT, HENCE DISPLAY A TABLE TO CHOOS WHICH **//
     else if (bundleUser.length > 0){
@@ -565,8 +386,6 @@ private void quitar(BundleUsuarioCarrito bundleUser,
                 quitarcosasBundle(bundleUser,bundleProducts,indice);
                 bundleUser.length -= 1;
 
-
-
             }else if (cantidad > 0) {
 
                 float pricePer1pz = bundleUser.precio.get(indice) / bundleUser.cantidad.get(indice);
@@ -578,27 +397,10 @@ private void quitar(BundleUsuarioCarrito bundleUser,
                 modificarcosasBundle(bundleUser,precioDefinitivo,bundleUser.cantidad.get(indice)-cantidad,indice);
                 bundleUser.total -= precio;
 
-
-
             }
-
-
-
-
         }
-
-
-
     }
-
-
-
-
-
-
-
-
-    }
+}
 
 
     /**
@@ -619,8 +421,6 @@ private void quitar(BundleUsuarioCarrito bundleUser,
         int cantidad;
         float precio;
 
-
-
         if (flags.isInsideArticulo)
         {
             float pricePer1pz = pointer.getFloat("precio");
@@ -631,7 +431,7 @@ private void quitar(BundleUsuarioCarrito bundleUser,
 
             System.out.println("Entra la cantidad a agregar al carrito:");
             cantidad = helperFuncs.checkIfInt(scanner.nextLine());
-            //TODO checar si el user a proposito pone un negativo
+
             if (isProductOnList == -1 && cantidad > 0) //** PRODUCT IS NOT IN LIST **//
             {
 
@@ -663,8 +463,6 @@ private void quitar(BundleUsuarioCarrito bundleUser,
                         bundleUser.total += precio;
                 }else
                 {
-
-
                     precio = pricePer1pz * cantidad;
                     float precioDefinitivo = precio + bundleUser.precio.get(isProductOnList);
 
@@ -672,16 +470,8 @@ private void quitar(BundleUsuarioCarrito bundleUser,
                     modificarcosasBundle(bundleUser,precioDefinitivo,cantidad1,isProductOnList);
 
                     bundleUser.total += precio;
-
-
                 }
-
-
-
             }
-
-
-
         }
         //** USER IS NOT INSIDE A PRODUCNT, HENCE DISPLAY A TABLE TO CHOOS WHICH **//
         else if (bundleUser.length > 0){
@@ -715,8 +505,6 @@ private void quitar(BundleUsuarioCarrito bundleUser,
 
                     bundleUser.total += precio;
 
-
-
                 }else if (cantidad>0) {
 
                     float pricePer1pz = bundleUser.precio.get(indice) / bundleUser.cantidad.get(indice);
@@ -728,28 +516,9 @@ private void quitar(BundleUsuarioCarrito bundleUser,
                     modificarcosasBundle(bundleUser,precioDefinitivo,cantidad1,indice);
 
                     bundleUser.total += precio;
-
-
-
                 }
-
-
-
-
             }
-
-
-
         }
-
-
-
-
-
-
-
-
-
     }
 
     private String convertStackKeysToString(List<String> stackKeys,int len)
@@ -762,12 +531,7 @@ private void quitar(BundleUsuarioCarrito bundleUser,
             if (i <len-1)
                 str.append("/");
         }
-
-
         return str.toString();
-
-
-
     }
 
     private void agregarCosasalBundle(BundleUsuarioCarrito bundleUser,float price,int cantidad,String producto,
@@ -782,13 +546,11 @@ private void quitar(BundleUsuarioCarrito bundleUser,
 
     }
 
-
     private void modificarcosasBundle(BundleUsuarioCarrito bundleUser,float price,int cantidad,
                                       int index)
     {
         bundleUser.precio.set(index,price);
         bundleUser.cantidad.set(index,cantidad);
-
 
     }
     private void quitarcosasBundle(BundleUsuarioCarrito bundleUser, BundleProductosCarritos bundleProductos,int indice)

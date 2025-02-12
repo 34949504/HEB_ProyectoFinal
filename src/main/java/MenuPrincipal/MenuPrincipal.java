@@ -57,56 +57,34 @@ public class MenuPrincipal {
         while (active)
         {
 
-//        File file = fileFuncs.checkIfFileExists(fileName);
-//        StringBuilder string = fileFuncs.readFile(file);
-//        menuCategorias.menu(string.toString());
+
+            //AQUI TALVEZ EL INICIO DE SESION
 
 
+            helperFuncs.imprimirListasCarrito(bundle_usuario,bundle_usuario.length,false);
 
-        helperFuncs.imprimirListasCarrito(bundle_usuario,bundle_usuario.length,false);
 
+            int listSize = helperFuncs.imprimirLista(opciones);
 
-        int listSize = helperFuncs.imprimirLista(opciones);
+            System.out.println("Selecciona:");
+            int indexSelected = helperFuncs.checkIfInt(scanner.nextLine());
 
-        System.out.println("Selecciona:");
-        int indexSelected = helperFuncs.checkIfInt(scanner.nextLine());
-
-        if (indexSelected > -1 && indexSelected < listSize)
-        {
-            if (indexSelected == listSize-1)
+            if (indexSelected > -1 && indexSelected < listSize)
             {
-                System.out.println("Cerrando sesion");
-            }
-            else {
-                funcs.get(indexSelected).run();
+                if (indexSelected == listSize-1)
+                {
+                    System.out.println("Cerrando sesion");
+                }
+                else {
+                    funcs.get(indexSelected).run();
+
+                }
+
 
             }
-
-
         }
+            return 0;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-        return 0;
     }
 
 
@@ -132,3 +110,9 @@ public class MenuPrincipal {
 
 
 }
+
+
+
+//        File file = fileFuncs.checkIfFileExists(fileName);
+//        StringBuilder string = fileFuncs.readFile(file);
+//        menuCategorias.menu(string.toString());
