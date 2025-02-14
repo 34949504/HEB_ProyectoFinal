@@ -12,13 +12,13 @@ public class BundleUsuarioCarrito {
 
 
 
-    public List<String> carritoLista;
-    public List<Integer> cantidadLista;
-    public List<Float> precioLista;
+    public List<String> carritoLista;  //LISTA DE ARTICULOS
+    public List<Integer> cantidadLista; //LISTA DE CANTIDAD DE LOS ARTICULOS
+    public List<Float> precioLista; //LISTA DE PRECIO DE ARTICULO * CANTIDAD
 
 
-    public int length;
-    public float total;
+    public int length; //LISTA DE ARTICULOS   EJEMPLO  [manzana, durazno]    Length es 2
+    public float total; //El PRECIO TOTAL DE TODOS LOS ARTICULOS
 
 
     public BundleUsuarioCarrito(List<String> carritoLista, List<Integer> cantidadLista,List<Float> precioLista,int length,float total) {

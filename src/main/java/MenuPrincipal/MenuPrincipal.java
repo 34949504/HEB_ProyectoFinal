@@ -12,6 +12,7 @@ import FileClasses.FileFuncs;
 import HelperFuncs.HelperFuncs;
 
 import DisplayProducts.UserInterfaceProducts;
+import Pagar.PagarArticulos;
 
 
 class ActiveBundle
@@ -111,6 +112,10 @@ public class MenuPrincipal {
 
     public void pagar(BundleUsuarioCarrito bundleUser,BundleProductosCarritos bundleProductos, ActiveBundle activeBundle)
     {
+
+        PagarArticulos pagarArticulos = new PagarArticulos();
+        pagarArticulos.inicio(bundleUser,bundleProductos);
+
         for (int i=0; i <bundleUser.length;i++)
         {
             String articulo = bundleUser.carritoLista.get(i);
@@ -122,7 +127,8 @@ public class MenuPrincipal {
             System.out.println("\n\n");
 
         }
-        activeBundle.isactive = false;
+        //activeBundle.isactive = false;
+        scanner.nextLine();
 
 
 

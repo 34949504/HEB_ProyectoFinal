@@ -495,6 +495,20 @@ public class Categorias_helpFuncs {
 
 
 
+    public JSONObject traverseStack2V(JSONObject json,List<String> stackKeys)
+    {
+        JSONObject pointer = json;
+
+        for (String element:stackKeys)
+        {
+            pointer = pointer.getJSONObject(element);
+
+        }
+        return pointer;
+    }
+
+
+
 
 
 
