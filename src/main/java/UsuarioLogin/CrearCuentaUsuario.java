@@ -77,12 +77,18 @@ public class CrearCuentaUsuario {
                     // -Constrasena seguta simbolos, numeros, etc
                     // -Prohibido nombre vacío o contrasena vacía
 
+                    if (account.compareTo("Admin") > 0){
 
-                    json.put(account,password);
-                    fileFuncs.writeFile(json.toString(4),"Jasons&files/Usuarios.json");
+                        json.put(account,password);
+                        fileFuncs.writeFile(json.toString(4),"Jasons&files/Usuarios.json");
 
-                    bundleUser.usuarioAccount = account;
-                    return 0;
+                        bundleUser.usuarioAccount = account;
+                        return 0;
+                    }else{
+
+                        System.out.println("Usuario reservado");
+                        System.out.println("-------------------------");
+                    }
 
                 }
 

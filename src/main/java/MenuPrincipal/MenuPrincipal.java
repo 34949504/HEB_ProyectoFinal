@@ -1,6 +1,7 @@
 package MenuPrincipal;/*
 Aqui es donde vamos a estar llamando todo
  */
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +36,7 @@ public class MenuPrincipal {
         List<Integer> stock = new ArrayList<Integer>();
 
 
-        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito, cantidad,precio,0,0,"");
+        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito, cantidad,precio,0,0,"",false);
         BundleProductosCarritos bundle_carritos = new BundleProductosCarritos(paths,stock);
         ActiveBundleWrap activeBundleWrap = new ActiveBundleWrap();
         Menu_Login_o_Crear_Cuenta menuLoginOCrearCuenta = new Menu_Login_o_Crear_Cuenta();
@@ -51,38 +52,44 @@ public class MenuPrincipal {
                 //() -> method3(42)  // method with 1 arg
         );
 
-        while (true){
+        while (true) {
 
-            int doneFor =  menuLoginOCrearCuenta.menu(activeBundleWrap,bundle_usuario);
-            if (doneFor == -1)
-            {
+            int doneFor = menuLoginOCrearCuenta.menu(activeBundleWrap, bundle_usuario);
+            if (doneFor == -1) {
                 return 0;
-            }else{
+            } else {
                 activeBundleWrap.setActive(true);
             }
 
 
-
-        while (activeBundleWrap.isActive())
-        {
-
+            if (!bundle_usuario.adminPowers) {
+                while (activeBundleWrap.isActive()) {
 
 
-            helperFuncs.imprimirListasCarrito(bundle_usuario,bundle_usuario.length,false);
+                    helperFuncs.imprimirListasCarrito(bundle_usuario, bundle_usuario.length, false);
 
-            int listSize = helperFuncs.imprimirLista(opciones);
+                    int listSize = helperFuncs.imprimirLista(opciones);
 
-            System.out.println("Selecciona:");
-            int indexSelected = helperFuncs.checkIfInt(scanner.nextLine());
-            helperFuncs.clearScreen();
+                    System.out.println("Selecciona:");
+                    int indexSelected = helperFuncs.checkIfInt(scanner.nextLine());
+                    helperFuncs.clearScreen();
 
-            if (indexSelected > -1 && indexSelected < listSize)
-            {
+                    if (indexSelected > -1 && indexSelected < listSize) {
 
-                    funcs.get(indexSelected).run();
+                        funcs.get(indexSelected).run();
+                    }
+                }
+            }else {
+
+                        File file = fileFuncs.checkIfFileExists("Jasons&files/Productos.json");
+                        StringBuilder string = fileFuncs.readFile(file);
+                        menuCategorias.menu(string.toString());
+
+                        bundle_usuario.adminPowers = false;
+
             }
-          }
         }
+
 
 
     }

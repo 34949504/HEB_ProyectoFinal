@@ -3,7 +3,9 @@ import HelperFuncs.HelperFuncs;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.util.*;
 
 import FileClasses.FileFuncs;
@@ -76,6 +78,28 @@ public class IniciarSesionUsuario {
                     }
 
                 }
+                else if (account.compareTo("Admin") == 0)
+                {
+                    File filepaswd = fileFuncs.checkIfFileExists("Jasons&files/adminPaswd.txt");
+                    String adminPassword = fileFuncs.readFile(filepaswd).toString();
+
+
+
+                    if (adminPassword.compareTo(password) == 0)
+                    {
+                        System.out.println("Granted");
+                        bundleUser.adminPowers =true;
+                        return 0;
+                    }
+                    else
+                    {
+                        valores.set(0,"");
+                        valores.set(1,"");
+                    }
+
+
+                }
+
                 else{
 
                     System.out.println("Usuario incorrecto");
@@ -99,5 +123,7 @@ public class IniciarSesionUsuario {
         }
 
     }
+
+
 
 }
