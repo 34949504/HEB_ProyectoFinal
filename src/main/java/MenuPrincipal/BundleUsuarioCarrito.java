@@ -20,13 +20,18 @@ public class BundleUsuarioCarrito {
     public int length; //LISTA DE ARTICULOS   EJEMPLO  [manzana, durazno]    Length es 2
     public float total; //El PRECIO TOTAL DE TODOS LOS ARTICULOS
 
+    public String usuarioAccount;
 
-    public BundleUsuarioCarrito(List<String> carritoLista, List<Integer> cantidadLista,List<Float> precioLista,int length,float total) {
+
+
+    public BundleUsuarioCarrito(List<String> carritoLista, List<Integer> cantidadLista,List<Float> precioLista,int length,float total,
+                                String usuarioAccount) {
         this.carritoLista = carritoLista;
         this.cantidadLista = cantidadLista;
         this.precioLista = precioLista;
         this.length = length;
         this.total = total;
+        this.usuarioAccount = usuarioAccount;
 
 
     }

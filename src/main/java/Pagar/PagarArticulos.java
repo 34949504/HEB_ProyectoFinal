@@ -52,7 +52,6 @@ public class PagarArticulos {
         float precioDeTodosLosArticulos = bundleUser.total;
         int length = bundleUser.length;
 
-        bundleProducts.
 
         int loQueSeTieneQueAgregarAlJson = stock - cantidad;
 

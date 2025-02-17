@@ -1,7 +1,6 @@
 package MenuPrincipal;/*
 Aqui es donde vamos a estar llamando todo
  */
-import org.json.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,15 +13,7 @@ import HelperFuncs.HelperFuncs;
 import DisplayProducts.UserInterfaceProducts;
 import Pagar.PagarArticulos;
 
-
-class ActiveBundle
-{
-
-    public boolean isactive = true;
-}
-
-
-
+import UsuarioLogin.Menu_Login_o_Crear_Cuenta;
 
 
 public class MenuPrincipal {
@@ -33,42 +24,48 @@ public class MenuPrincipal {
     private Menu_Categorias menuCategorias = new Menu_Categorias();
 
 
+
     public int  menu()
     {
         boolean active = true;
         List<String> carrito = new ArrayList<String>();
         List<Integer> cantidad = new ArrayList<Integer>();
         List<Float> precio = new ArrayList<Float>();
-
         List<String> paths = new ArrayList<String>();
         List<Integer> stock = new ArrayList<Integer>();
 
-        ActiveBundle activeBundle = new ActiveBundle();
 
-
-
-
-        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito, cantidad,precio,0,0);
+        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito, cantidad,precio,0,0,"");
         BundleProductosCarritos bundle_carritos = new BundleProductosCarritos(paths,stock);
+        ActiveBundleWrap activeBundleWrap = new ActiveBundleWrap();
+        Menu_Login_o_Crear_Cuenta menuLoginOCrearCuenta = new Menu_Login_o_Crear_Cuenta();
 
 
 
-        List<String> opciones = new ArrayList<>(Arrays.asList("Buscar productos","Pagar","Cerrar sesión")); // Cerrar sesion tiene que ser el ultimo elemento
+        List<String> opciones = new ArrayList<>(Arrays.asList("Buscar productos","Pagar","Cerrar sesión"));
         List<Runnable> funcs = Arrays.asList(
                 () -> buscarProductos(bundle_usuario,bundle_carritos),
-                () -> pagar(bundle_usuario,bundle_carritos,activeBundle)// method with 2 args
+                () -> pagar(bundle_usuario,bundle_carritos,activeBundleWrap),// method with 2 args
+                () -> cerrarSesion(activeBundleWrap,bundle_usuario,bundle_carritos)
                 //Main::method2,  // method with no args
                 //() -> method3(42)  // method with 1 arg
         );
 
+        while (true){
+
+            int doneFor =  menuLoginOCrearCuenta.menu(activeBundleWrap,bundle_usuario);
+            if (doneFor == -1)
+            {
+                return 0;
+            }else{
+                activeBundleWrap.setActive(true);
+            }
 
 
 
-        while (activeBundle.isactive)
+        while (activeBundleWrap.isActive())
         {
 
-
-            //AQUI TALVEZ EL INICIO DE SESION
 
 
             helperFuncs.imprimirListasCarrito(bundle_usuario,bundle_usuario.length,false);
@@ -77,22 +74,16 @@ public class MenuPrincipal {
 
             System.out.println("Selecciona:");
             int indexSelected = helperFuncs.checkIfInt(scanner.nextLine());
+            helperFuncs.clearScreen();
 
             if (indexSelected > -1 && indexSelected < listSize)
             {
-                if (indexSelected == listSize-1)
-                {
-                    System.out.println("Cerrando sesion");
-                }
-                else {
+
                     funcs.get(indexSelected).run();
-
-                }
-
-
             }
+          }
         }
-            return 0;
+
 
     }
 
@@ -110,7 +101,7 @@ public class MenuPrincipal {
 
     }
 
-    public void pagar(BundleUsuarioCarrito bundleUser,BundleProductosCarritos bundleProductos, ActiveBundle activeBundle)
+    public void pagar(BundleUsuarioCarrito bundleUser,BundleProductosCarritos bundleProductos, ActiveBundleWrap activeBundleWrap)
     {
 
         PagarArticulos pagarArticulos = new PagarArticulos();
@@ -127,18 +118,28 @@ public class MenuPrincipal {
             System.out.println("\n\n");
 
         }
-        //activeBundle.isactive = false;
+
+        activeBundleWrap.setActive(false);
         scanner.nextLine();
-
-
-
-
-
 
 
     }
 
-    //public  static  void printWord(String word,String num,)
+    public void cerrarSesion(ActiveBundleWrap activeBundleWrap,BundleUsuarioCarrito bundleUser,BundleProductosCarritos bundleProducts)
+    {
+
+        activeBundleWrap.setActive(false);
+        bundleUser.carritoLista.clear();
+        bundleUser.cantidadLista.clear();
+        bundleUser.precioLista.clear();
+        bundleProducts.articulosPath.clear();
+        bundleProducts.howManyInStock.clear();
+        bundleUser.length = 0;
+        bundleUser.total = 0;
+
+
+    }
+
 
 
 }
