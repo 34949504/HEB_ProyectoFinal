@@ -15,7 +15,7 @@ import DisplayProducts.UserInterfaceProducts;
 import Pagar.PagarArticulos;
 
 import UsuarioLogin.Menu_Login_o_Crear_Cuenta;
-
+import Admin.Admin_menu;
 
 public class MenuPrincipal {
 
@@ -81,11 +81,11 @@ public class MenuPrincipal {
                 }
             }else {
 
-                        File file = fileFuncs.checkIfFileExists("Jasons&files/Productos.json");
-                        StringBuilder string = fileFuncs.readFile(file);
-                        menuCategorias.menu(string.toString());
+                        new Admin_menu().menu(bundle_usuario);
 
                         bundle_usuario.adminPowers = false;
+
+
 
             }
         }

@@ -308,9 +308,11 @@ public class Categorias_helpFuncs {
         while (true)
         {
             if (isInsideArticulo){
-        System.out.printf("Nombre actual del articulo %s\n",previousName);
-        System.out.println("Entra el nuevo nombre");
-        newName = scanner.nextLine();}
+                System.out.printf("Nombre actual del articulo %s\n",previousName);
+                System.out.println("Entra el nuevo nombre");
+                newName = scanner.nextLine();
+            }
+
             else{
                 System.out.printf("Nombre actual de la categoría %s\n",previousName);
                 System.out.println("Entra el nuevo nombre");
