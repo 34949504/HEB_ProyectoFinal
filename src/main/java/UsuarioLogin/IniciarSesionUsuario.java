@@ -61,12 +61,16 @@ public class IniciarSesionUsuario {
 
                 if (new CrearCuentaUsuario().checkIfAccountExists(account,json))
                 {
-                    String passwordJson = json.getString(account);
+                    JSONObject atributos = json;
+                    atributos = atributos.getJSONObject(account);
+
+                    String passwordJson = atributos.getString("password");
 
                     helperFuncs.clearScreen();
                     if (passwordJson.compareTo(password) == 0)
                     {
                         bundleUser.usuarioAccount = account;
+                        bundleUser.dineroActual = atributos.getFloat("saldo");
                         return 0;
                     }
                     else

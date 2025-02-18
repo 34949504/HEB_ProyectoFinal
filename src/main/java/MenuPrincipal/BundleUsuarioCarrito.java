@@ -22,11 +22,12 @@ public class BundleUsuarioCarrito {
 
     public String usuarioAccount;
     public boolean adminPowers;
+    public float dineroActual;
 
 
 
     public BundleUsuarioCarrito(List<String> carritoLista, List<Integer> cantidadLista,List<Float> precioLista,int length,float total,
-                                String usuarioAccount,boolean adminPowers) {
+                                String usuarioAccount,boolean adminPowers,float dineroActual) {
         this.carritoLista = carritoLista;
         this.cantidadLista = cantidadLista;
         this.precioLista = precioLista;
@@ -34,6 +35,7 @@ public class BundleUsuarioCarrito {
         this.total = total;
         this.usuarioAccount = usuarioAccount;
         this.adminPowers = adminPowers;
+        this.dineroActual = dineroActual;
 
 
     }

@@ -79,10 +79,16 @@ public class CrearCuentaUsuario {
 
                     if (account.compareTo("Admin") > 0){
 
-                        json.put(account,password);
+                        JSONObject atributos = new JSONObject();
+                        atributos.put("password",password);
+                        atributos.put("saldo",0);
+
+                        json.put(account,atributos);
                         fileFuncs.writeFile(json.toString(4),"Jasons&files/Usuarios.json");
 
                         bundleUser.usuarioAccount = account;
+                        bundleUser.dineroActual = 0;
+
                         return 0;
                     }else{
 

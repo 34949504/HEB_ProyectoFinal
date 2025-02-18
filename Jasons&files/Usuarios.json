@@ -1,6 +1,10 @@
 {
-    "bolas": "123",
-    "Wong": "Savill",
-    "hola": "asw",
-    "wassa": "wefefw"
+    "Wong": {
+        "password": "Dupar",
+        "saldo": 10000
+    },
+    "Gloria": {
+        "password": "Yupix",
+        "saldo": 0
+    }
 }

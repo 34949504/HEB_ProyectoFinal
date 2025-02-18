@@ -16,7 +16,9 @@ import Pagar.PagarArticulos;
 
 import UsuarioLogin.Menu_Login_o_Crear_Cuenta;
 import Admin.Admin_menu;
+import UsuarioSaldo.MenuSaldo;
 
+import UsuarioConfiguracion.ConfigMenu;
 public class MenuPrincipal {
 
     private HelperFuncs helperFuncs = new HelperFuncs();
@@ -36,18 +38,20 @@ public class MenuPrincipal {
         List<Integer> stock = new ArrayList<Integer>();
 
 
-        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito, cantidad,precio,0,0,"",false);
+        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito, cantidad,precio,0,0,"",false,0);
         BundleProductosCarritos bundle_carritos = new BundleProductosCarritos(paths,stock);
         ActiveBundleWrap activeBundleWrap = new ActiveBundleWrap();
         Menu_Login_o_Crear_Cuenta menuLoginOCrearCuenta = new Menu_Login_o_Crear_Cuenta();
 
 
 
-        List<String> opciones = new ArrayList<>(Arrays.asList("Buscar productos","Pagar","Cerrar sesión"));
+        List<String> opciones = new ArrayList<>(Arrays.asList("Buscar productos","Pagar","Cerrar sesión","Saldo","Cuenta"));
         List<Runnable> funcs = Arrays.asList(
                 () -> buscarProductos(bundle_usuario,bundle_carritos),
                 () -> pagar(bundle_usuario,bundle_carritos,activeBundleWrap),// method with 2 args
-                () -> cerrarSesion(activeBundleWrap,bundle_usuario,bundle_carritos)
+                () -> cerrarSesion(activeBundleWrap,bundle_usuario,bundle_carritos),
+                () -> new MenuSaldo().menu(bundle_usuario),
+                () -> new ConfigMenu().menu()
                 //Main::method2,  // method with no args
                 //() -> method3(42)  // method with 1 arg
         );
@@ -68,6 +72,7 @@ public class MenuPrincipal {
 
                     helperFuncs.imprimirListasCarrito(bundle_usuario, bundle_usuario.length, false);
 
+                    System.out.printf("SALDO ACTUAL: %.2f\n",bundle_usuario.dineroActual);
                     int listSize = helperFuncs.imprimirLista(opciones);
 
                     System.out.println("Selecciona:");
