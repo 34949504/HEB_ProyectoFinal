@@ -51,7 +51,7 @@ public class MenuPrincipal {
                 () -> pagar(bundle_usuario,bundle_carritos,activeBundleWrap),// method with 2 args
                 () -> cerrarSesion(activeBundleWrap,bundle_usuario,bundle_carritos),
                 () -> new MenuSaldo().menu(bundle_usuario),
-                () -> new ConfigMenu().menu()
+                () -> new ConfigMenu().menu(bundle_usuario)
                 //Main::method2,  // method with no args
                 //() -> method3(42)  // method with 1 arg
         );
