@@ -6,5 +6,9 @@
     "Gloria": {
         "password": "Yupix",
         "saldo": 0
+    },
+    "nvidia": {
+        "password": "Nvidia5090-",
+        "saldo": 0
     }
 }
