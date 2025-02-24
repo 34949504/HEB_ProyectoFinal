@@ -122,19 +122,19 @@ public class MenuPrincipal {
         PagarArticulos pagarArticulos = new PagarArticulos();
         pagarArticulos.inicio(bundleUser,bundleProductos);
 
-        for (int i=0; i <bundleUser.length;i++)
-        {
-            String articulo = bundleUser.carritoLista.get(i);
-            float precio = bundleUser.precioLista.get(i);
-            int cantidad = bundleUser.cantidadLista.get(i);
-            String path = bundleProductos.articulosPath.get(i);
-
-            System.out.printf("Articulo:%s\nPrecio:%f\nCantidad:%d\nPath:%s",articulo,precio,cantidad,path);
-            System.out.println("\n\n");
-
-        }
-
-        activeBundleWrap.setActive(false);
+//        for (int i=0; i <bundleUser.length;i++)
+//        {
+//            String articulo = bundleUser.carritoLista.get(i);
+//            float precio = bundleUser.precioLista.get(i);
+//            int cantidad = bundleUser.cantidadLista.get(i);
+//            String path = bundleProductos.articulosPath.get(i);
+//
+//            System.out.printf("Articulo:%s\nPrecio:%f\nCantidad:%d\nPath:%s",articulo,precio,cantidad,path);
+//            System.out.println("\n\n");
+//
+//        }
+//
+//        activeBundleWrap.setActive(false);
         scanner.nextLine();
 
 
