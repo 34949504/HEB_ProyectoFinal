@@ -10,86 +10,84 @@ import java.util.List;
 import java.util.Scanner;
 
 import Categorias.Categorias_helpFuncs;
+import MenuPrincipal.MenuPrincipal;
 
-
-//Todo Checar que el carrito de artículos no este vacío cuando el quiera pagar. Si es el caso, entonces regresar y
-// imprimir un mensaje que no ha seleccionado nada
-//
- //Todo Implementar que cuando el cliente da pagar, preguntar si esta satisfecho con sus artículos
-
-//Todo Implementar de acuerdo lo que esta en el carrito, retirar la cantidad de productos al json
-//  Tip: Utiliza el objeto bumdleUser Y bundleProducts
-
-
-
-public class PagarArticulos {
+public class PagarArticulos
+{
 
     private FileFuncs fileFuncs = new FileFuncs();
-    private Categorias_helpFuncs categoriasHelpFuncs =  new Categorias_helpFuncs();
+    private Categorias_helpFuncs categoriasHelpFuncs = new Categorias_helpFuncs();
     private Scanner scanner = new Scanner(System.in);
-
-
-
-
-
 
     public void inicio(BundleUsuarioCarrito bundleUser, BundleProductosCarritos bundleProducts)
     {
-
-        //SOLAMENTE SE ENCARGA DE LEER Y CARGAR EL JSON EN LA VARIABLE json//
-        File file = fileFuncs.checkIfFileExists("Jasons&files/Productos.json");
-        StringBuilder content = fileFuncs.readFile(file);
-        JSONObject json = new JSONObject(content.toString());
-        //**********************************************************************
-
-
-//        [path 1, path 2, path 3]
-        String path = bundleProducts.articulosPath.get(0);
-
-        int cantidad = bundleUser.cantidadLista.get(0);
-        int stock = bundleProducts.howManyInStock.get(0);
-        float precio = bundleUser.precioLista.get(0);
-        float precioDeTodosLosArticulos = bundleUser.total;
-        int length = bundleUser.length;
-
-
-        int loQueSeTieneQueAgregarAlJson = stock - cantidad;
-
-
-        System.out.printf("Path es este: %s\n",path);
-        System.out.printf("Cantidad que selecciono el usuario del articulo: %d\n",cantidad);
-        System.out.printf("Cuantos hay en stock: %d\n",stock);
-        System.out.printf("Precio total del articulo seleccionado: %f\n",precio);
-        System.out.printf("Precio total de todos los articulos: %f\n",precioDeTodosLosArticulos);
-        System.out.printf("Length es : %d\n",length);
-        System.out.printf("Lo que se tiene agregar al archivo stock - cantidad : %d\n",stock-cantidad);
-
-
-
-
-
-        List<String> stackKeys = List.of(path.split("/"));
-
-
-        JSONObject pointer = categoriasHelpFuncs.traverseStack2V(json,stackKeys);
-
-        pointer.put("cantidad",stock-cantidad);
-        int cantidadAhora =  pointer.getInt("cantidad");
-        System.out.println("Cantidad ahora es  "+ cantidadAhora);
-        System.out.println("Pero para que el cambio se guarde al json, tienes que escribir al json\n");
-
-        fileFuncs.writeFile(json.toString(4),"Jasons&files/Productos.json");
-
-
-        System.out.println("\n\nImprimiendo las llaves de StackKeys\n");
-        for (String key: stackKeys)
+        if (bundleUser.cantidadLista.isEmpty() || bundleUser.precioLista.isEmpty())
         {
-            System.out.printf("%s\n",key);
+            System.out.println("Tu carrito está vacío. No se puede proceder con el pago.");
+            return;
         }
 
+        System.out.print("¿Estás satisfecho con los artículos en tu carrito? (Y/n): ");
+        String respuesta = scanner.nextLine();
+
+        if (!respuesta.equalsIgnoreCase("Y"))
+        {
+            System.out.println("Puedes seguir agregando artículos o cambiar tu selección.");
+
+            MenuPrincipal menuPrincipal = new MenuPrincipal();
+            menuPrincipal.menu();
+            return;
+        }
+
+        double totalPago = bundleUser.total;
+
+        if (bundleUser.dineroActual >= totalPago)
+        {
+            bundleUser.dineroActual -= totalPago;
+
+            File userFile = fileFuncs.checkIfFileExists("Jasons&files/Usuarios.json");
+            StringBuilder userContent = fileFuncs.readFile(userFile);
+            JSONObject usuariosJson = new JSONObject(userContent.toString());
+
+            if (!usuariosJson.has(bundleUser.usuarioAccount))
+            {
+                System.out.println("Usuario no encontrado.");
+                return;
+            }
+
+            JSONObject usuarioData = usuariosJson.getJSONObject(bundleUser.usuarioAccount);
+            usuarioData.put("saldo", bundleUser.dineroActual);
+
+            fileFuncs.writeFile(usuariosJson.toString(4), "Jasons&files/Usuarios.json");
+
+            File file = fileFuncs.checkIfFileExists("Jasons&files/Productos.json");
+            StringBuilder content = fileFuncs.readFile(file);
+            JSONObject json = new JSONObject(content.toString());
+
+            String path = bundleProducts.articulosPath.get(0);
+            int cantidad = bundleUser.cantidadLista.get(0);
+            int stock = bundleProducts.howManyInStock.get(0);
+
+
+
+            List<String> stackKeys = List.of(path.split("/"));
+            JSONObject pointer = categoriasHelpFuncs.traverseStack2V(json, stackKeys);
+
+            pointer.put("cantidad", stock - cantidad);
+
+            fileFuncs.writeFile(json.toString(4), "Jasons&files/Productos.json");
+
+            System.out.println("\nGracias por su compra. ¡Se ha descontado el total de su cuenta!");
+            System.out.println("Nuevo saldo: " + bundleUser.dineroActual + " pesos.");
+        } else
+        {
+            System.out.println("No tienes suficiente saldo para realizar esta compra.");
+            System.out.println("Pago no realizado. Regresando al menú...");
+        }
+
+        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        menuPrincipal.menu();
+
         scanner.nextLine();
-
-
-
     }
 }
