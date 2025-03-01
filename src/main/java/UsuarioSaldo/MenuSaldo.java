@@ -25,7 +25,7 @@ public class MenuSaldo {
         while (true)
         {
             System.out.printf("SALDO ACTUAL: %.2f",bundleUser.dineroActual);
-            System.out.println("(1)Agregar al saldo\n(2)Retirar del saldo\n(3)Salir\nSeleccionar:");
+            System.out.println("\n(1)Agregar al saldo\n(2)Retirar del saldo\n(3)Salir\nSeleccionar:");
             int index = helperFuncs.checkIfInt(scanner.nextLine());
             helperFuncs.clearScreen();
 

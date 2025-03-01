@@ -27,30 +27,33 @@ public class IniciarSesionUsuario {
             System.out.print("Nombre de usuario: ");
             nombreUsuario = scanner.nextLine().trim();
 
-            if (!json.has(nombreUsuario)) {
-
-                if (nombreUsuario.compareTo("Admin") == 0)
-                {
-                    System.out.print("Contraseña: ");
-                    String passwd = scanner.nextLine();
-                    File a = fileFuncs.checkIfFileExists("Jasons&files/adminPaswd.txt");
-                    String adminPasswd = fileFuncs.readFile(a).toString();
-
-                    if (adminPasswd.compareTo(passwd) == 0)
-                    {
-                        helperFuncs.clearScreen();
-                        bundleUser.adminPowers = true;
-                        return 0;
-                    }
-                    System.out.println("Error: Contraseña incorrecta. Intente nuevamente.");
+            if(nombreUsuario.compareTo("Admin") == 0)
+            {
+                System.out.print("Contraseña: ");
+                String passwd = scanner.nextLine();
+                File a = fileFuncs.checkIfFileExists("Jasons&files/adminPaswd.txt");
+                String adminPasswd = fileFuncs.readFile(a).toString();
+                System.out.println("The fucks going on");
+                System.out.println(adminPasswd);
+                if (adminPasswd.compareTo(passwd) == 0) {
+                    helperFuncs.clearScreen();
+                    bundleUser.adminPowers = true;
+                    return 0;
+                }else {
                     nombreUsuario = "";
+                    helperFuncs.clearScreen();
+                    System.out.println("Contrasena incorrecta");
+                    continue;
+                }
 
-                }else{
+            }
+
+            if (!json.has(nombreUsuario)) {
 
 
                 System.out.println("Error: Usuario no encontrado. Intente nuevamente.");
                 nombreUsuario = "";}
-            }
+
 
 
         } while (nombreUsuario.isEmpty());
