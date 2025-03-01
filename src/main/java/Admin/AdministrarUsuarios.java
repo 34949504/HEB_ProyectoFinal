@@ -48,8 +48,11 @@ public class AdministrarUsuarios {
             {
                 JSONObject pointer = new JSONObject();
                 pointer = json;
-                String passwd = pointer.getString(usersList.get(index));
+                System.out.println(usersList.get(index));
+                pointer = pointer.getJSONObject(usersList.get(index));
+
                 String name  = usersList.get(index);
+                String passwd = pointer.getString("password");
 
                 while (true)
                 {
