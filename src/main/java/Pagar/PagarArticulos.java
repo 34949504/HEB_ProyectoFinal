@@ -1,6 +1,7 @@
 package Pagar;
 
 import FileClasses.FileFuncs;
+import HelperFuncs.HelperFuncs;
 import MenuPrincipal.BundleProductosCarritos;
 import MenuPrincipal.BundleUsuarioCarrito;
 import org.json.JSONObject;
@@ -18,11 +19,13 @@ public class PagarArticulos
     private FileFuncs fileFuncs = new FileFuncs();
     private Categorias_helpFuncs categoriasHelpFuncs = new Categorias_helpFuncs();
     private Scanner scanner = new Scanner(System.in);
+    private HelperFuncs helperFuncs = new HelperFuncs();
 
     public void inicio(BundleUsuarioCarrito bundleUser, BundleProductosCarritos bundleProducts)
     {
         if (bundleUser.cantidadLista.isEmpty() || bundleUser.precioLista.isEmpty())
         {
+            helperFuncs.clearScreen();
             System.out.println("Tu carrito está vacío. No se puede proceder con el pago.");
             return;
         }
@@ -32,10 +35,7 @@ public class PagarArticulos
 
         if (!respuesta.equalsIgnoreCase("Y"))
         {
-            System.out.println("Puedes seguir agregando artículos o cambiar tu selección.");
 
-            MenuPrincipal menuPrincipal = new MenuPrincipal();
-            menuPrincipal.menu();
             return;
         }
 
@@ -78,16 +78,29 @@ public class PagarArticulos
             fileFuncs.writeFile(json.toString(4), "Jasons&files/Productos.json");
 
             System.out.println("\nGracias por su compra. ¡Se ha descontado el total de su cuenta!");
-            System.out.println("Nuevo saldo: " + bundleUser.dineroActual + " pesos.");
+//            System.out.printf("Nuevo saldo: $%.2f pesos%n", bundleUser.dineroActual);
+//            System.out.println("Nuevo saldo: " + bundleUser.dineroActual + " pesos.");
+
+            cleaningLists(bundleUser,bundleProducts);
         } else
         {
             System.out.println("No tienes suficiente saldo para realizar esta compra.");
             System.out.println("Pago no realizado. Regresando al menú...");
         }
 
-        MenuPrincipal menuPrincipal = new MenuPrincipal();
-        menuPrincipal.menu();
 
-        scanner.nextLine();
+    }
+
+    private void cleaningLists(BundleUsuarioCarrito bundleUser,BundleProductosCarritos bundleProducts)
+    {
+
+        bundleUser.carritoLista.clear();
+        bundleUser.cantidadLista.clear();
+        bundleUser.precioLista.clear();
+        bundleProducts.articulosPath.clear();
+        bundleProducts.howManyInStock.clear();
+        bundleUser.length = 0;
+        bundleUser.total = 0;
+
     }
 }

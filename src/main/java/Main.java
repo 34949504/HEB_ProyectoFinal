@@ -4,7 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.io.PrintStream;
 import UsuarioLogin.Menu_Login_o_Crear_Cuenta;
 
-import RegistroDatos.Ingresos;
 
 public class Main {
 

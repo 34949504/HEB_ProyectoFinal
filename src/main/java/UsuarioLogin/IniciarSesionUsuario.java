@@ -90,6 +90,7 @@ public class IniciarSesionUsuario {
             }
         } while (contrasena.isEmpty());
 
+        helperFuncs.clearScreen();
         System.out.println("Inicio de sesión exitoso! Redirigiendo al menú principal...");
 
         // Si el usuario tiene el formato nuevo, asignamos saldo. Si no, dejamos el saldo en 0.

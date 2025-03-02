@@ -18,7 +18,8 @@ public class ConfigMenu {
     public void menu(BundleUsuarioCarrito bundleUser)
     {
 
-
+        System.out.println("Todavía no se ha implementado esto.\nSi quieres cambiar algo de tu cuenta, porfavor contactar al admin al\n" +
+                "52+ 81 69 89 56 73");
 
     }
 }

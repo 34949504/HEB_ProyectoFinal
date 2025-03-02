@@ -1,4 +1,8 @@
 {
+    "Bucke": {
+        "password": "hA73(@*74761dj",
+        "saldo": 325
+    },
     "Wong": {
         "password": "Dupar",
         "saldo": 288
@@ -17,6 +21,10 @@
     },
     "Boliche": {
         "password": "AAid9832#kdwfel",
+        "saldo": 0
+    },
+    "Bonks": {
+        "password": "jJS&%2kdsahfi",
         "saldo": 0
     }
 }

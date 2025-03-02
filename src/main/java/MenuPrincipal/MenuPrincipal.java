@@ -20,7 +20,6 @@ import UsuarioSaldo.MenuSaldo;
 
 import UsuarioConfiguracion.ConfigMenu;
 
-import RegistroDatos.Ingresos;
 public class MenuPrincipal {
 
     private HelperFuncs helperFuncs = new HelperFuncs();
@@ -68,37 +67,37 @@ public class MenuPrincipal {
                 activeBundleWrap.setActive(true);
             }
 
+            while (activeBundleWrap.isActive()) {
 
-            if (!bundle_usuario.adminPowers) {
-                while (activeBundleWrap.isActive()) {
+                if (!bundle_usuario.adminPowers) {
 
 
-                    helperFuncs.imprimirListasCarrito(bundle_usuario, bundle_usuario.length, false);
+                        helperFuncs.imprimirListasCarrito(bundle_usuario, bundle_usuario.length, false);
 
-                    System.out.printf("SALDO ACTUAL: %.2f\n",bundle_usuario.dineroActual);
-                    int listSize = helperFuncs.imprimirLista(opciones);
+                        System.out.printf("SALDO ACTUAL: %.2f\n", bundle_usuario.dineroActual);
+                        int listSize = helperFuncs.imprimirLista(opciones);
 
-                    System.out.println("Selecciona:");
-                    int indexSelected = helperFuncs.checkIfInt(scanner.nextLine());
-                    helperFuncs.clearScreen();
+                        System.out.println("Selecciona:");
+                        int indexSelected = helperFuncs.checkIfInt(scanner.nextLine());
+                        helperFuncs.clearScreen();
 
-                    if (indexSelected > -1 && indexSelected < listSize) {
+                        if (indexSelected > -1 && indexSelected < listSize) {
 
-                        funcs.get(indexSelected).run();
-                    }
+                            funcs.get(indexSelected).run();
+
+                        }
+
+                } else {
+
+                    new Admin_menu().menu(bundle_usuario);
+
+                    bundle_usuario.adminPowers = false;
+
+
                 }
-            }else {
-
-                        new Admin_menu().menu(bundle_usuario);
-
-                        bundle_usuario.adminPowers = false;
-
-
-
             }
+
         }
-
-
 
     }
 
@@ -121,21 +120,6 @@ public class MenuPrincipal {
 
         PagarArticulos pagarArticulos = new PagarArticulos();
         pagarArticulos.inicio(bundleUser,bundleProductos);
-
-//        for (int i=0; i <bundleUser.length;i++)
-//        {
-//            String articulo = bundleUser.carritoLista.get(i);
-//            float precio = bundleUser.precioLista.get(i);
-//            int cantidad = bundleUser.cantidadLista.get(i);
-//            String path = bundleProductos.articulosPath.get(i);
-//
-//            System.out.printf("Articulo:%s\nPrecio:%f\nCantidad:%d\nPath:%s",articulo,precio,cantidad,path);
-//            System.out.println("\n\n");
-//
-//        }
-//
-//        activeBundleWrap.setActive(false);
-        scanner.nextLine();
 
 
     }
