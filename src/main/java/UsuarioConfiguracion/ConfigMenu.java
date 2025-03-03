@@ -41,6 +41,7 @@ public class ConfigMenu {
                     cambiarCorreo(bundleUser);
                     break;
                 case "5":
+                    helperFuncs.clearScreen();
                     activo = false;
                     break;
                 default:
@@ -150,6 +151,7 @@ public class ConfigMenu {
         String nuevoCorreo = scanner.nextLine().trim();
 
         if (!nuevoCorreo.contains("@") || !nuevoCorreo.contains(".")) {
+            helperFuncs.clearScreen();
             System.out.println("❌ Error: Ingresa un correo válido.");
             return;
         }
@@ -158,13 +160,14 @@ public class ConfigMenu {
         json.getJSONObject(usuario).put("email", nuevoCorreo);
 
         // Guardar en el archivo
-        System.out.println("📂 Intentando escribir en: " + file.getAbsolutePath());
-        System.out.println("📄 Nuevo contenido del JSON:\n" + json.toString(4));
 
-        if (fileFuncs.writeFile(file.getAbsolutePath(), json.toString(4))) {
+
+        if (fileFuncs.writeFile( json.toString(4),"Jasons&files/Usuarios.json")) {
             bundleUser.setEmail(nuevoCorreo); // Actualizar en memoria
+            helperFuncs.clearScreen();
             System.out.println("✅ Correo electrónico actualizado correctamente.");
         } else {
+            helperFuncs.clearScreen();
             System.out.println("❌ Error: No se pudo actualizar el correo en el archivo.");
         }
     }
