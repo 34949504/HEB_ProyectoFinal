@@ -92,6 +92,7 @@ public class MenuPrincipal {
                     new Admin_menu().menu(bundle_usuario);
 
                     bundle_usuario.adminPowers = false;
+                    activeBundleWrap.setActive(false);
 
 
                 }

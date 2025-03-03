@@ -53,12 +53,13 @@ public class AdministrarUsuarios {
 
                 String name  = usersList.get(index);
                 String passwd = pointer.getString("password");
+                float saldo = pointer.getFloat("saldo");
 
                 while (true)
                 {
 
 
-                    System.out.printf("(0)Nombre de cuenta: %s\n(1)Contrasena: %s\n(2)Borrar Usuario\n(3)Salir\nSeleccionar:",name,passwd);
+                    System.out.printf("(0)Nombre de cuenta: %s\n(1)Contrasena: %s\n(2)Borrar Usuario\n(3)Guardar\nSeleccionar:",name,passwd);
                     int indexHere = helperFuncs.checkIfInt(scanner.nextLine());
                     helperFuncs.clearScreen();
 
@@ -70,7 +71,14 @@ public class AdministrarUsuarios {
                         name = nuevoNombre;
 
                         json.remove(usersList.get(index)); // Quitar antiguo
-                        json.put(nuevoNombre,passwd);
+
+                        JSONObject nuevo = new JSONObject();
+                        nuevo.put("saldo",saldo);
+                        nuevo.put("password",passwd);
+
+
+
+                        json.put(nuevoNombre,nuevo);
 
 
                         usersList.remove(index);
@@ -86,8 +94,13 @@ public class AdministrarUsuarios {
 
                         passwd = nuevaPaswd;
 
+
+                        JSONObject nuevo = new JSONObject();
+                        nuevo.put("saldo",saldo);
+                        nuevo.put("password",passwd);
+
                         json.remove(usersList.get(index)); // Quitar antiguo
-                        json.put(name,nuevaPaswd);
+                        json.put(name,nuevo);
 
 
 
@@ -109,6 +122,7 @@ public class AdministrarUsuarios {
                     else if (indexHere == 3)
                     {
 
+                        fileFuncs.writeFile(json.toString(4),usuariosPath);
                         break;
                     }
                 }

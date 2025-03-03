@@ -1,71 +1,6 @@
 {
     "Mascotas": {
         "Perros": {
-            "Collares y accesorios": {
-                "Cadena Grande": {
-                    "descripcion": "",
-                    "precio": 75.9,
-                    "color": "rosa",
-                    "proveedor": "",
-                    "cantidad": 11
-                },
-                "Correa Militar Chica": {
-                    "descripcion": "",
-                    "precio": 140,
-                    "color": "",
-                    "proveedor": "",
-                    "cantidad": 15
-                },
-                "Cadena Mediana": {
-                    "descripcion": "",
-                    "precio": 54,
-                    "color": "",
-                    "proveedor": "",
-                    "cantidad": 15
-                },
-                "Tazon Mini Fig Gato Tazon Mini Fig Gato": {
-                    "descripcion": "",
-                    "precio": 37,
-                    "color": "",
-                    "proveedor": "",
-                    "cantidad": 15
-                },
-                "Fancy Pets Alimento para Ave Barrito de Mijo 95 g": {
-                    "descripcion": "",
-                    "precio": 36,
-                    "color": "",
-                    "proveedor": "",
-                    "cantidad": 15
-                },
-                "Correa Chica con Puntos": {
-                    "descripcion": "",
-                    "precio": 140,
-                    "color": "",
-                    "proveedor": "",
-                    "cantidad": 15
-                },
-                "Collar Gato Elastico 28 Cm": {
-                    "descripcion": "",
-                    "precio": 40,
-                    "color": "",
-                    "proveedor": "",
-                    "cantidad": 15
-                },
-                "Correa Chica": {
-                    "descripcion": "",
-                    "precio": 199,
-                    "color": "",
-                    "proveedor": "",
-                    "cantidad": 15
-                },
-                "Plato para Mascota Gato": {
-                    "descripcion": "",
-                    "precio": 466,
-                    "color": "",
-                    "proveedor": "",
-                    "cantidad": 15
-                }
-            },
             "Alimento Húmedo": {
                 "Alimento Húmedo para Perro Pate Salmón 100 g": {
                     "descripcion": "",
@@ -254,6 +189,71 @@
                     "cantidad": 15
                 }
             },
+            "Cadenas": {
+                "Cadena Grande": {
+                    "descripcion": "",
+                    "precio": 75.9,
+                    "color": "rosa",
+                    "proveedor": "",
+                    "cantidad": 11
+                },
+                "Correa Militar Chica": {
+                    "descripcion": "",
+                    "precio": 140,
+                    "color": "",
+                    "proveedor": "",
+                    "cantidad": 15
+                },
+                "Cadena Mediana": {
+                    "descripcion": "",
+                    "precio": 54,
+                    "color": "",
+                    "proveedor": "",
+                    "cantidad": 15
+                },
+                "Tazon Mini Fig Gato Tazon Mini Fig Gato": {
+                    "descripcion": "",
+                    "precio": 37,
+                    "color": "",
+                    "proveedor": "",
+                    "cantidad": 15
+                },
+                "Fancy Pets Alimento para Ave Barrito de Mijo 95 g": {
+                    "descripcion": "",
+                    "precio": 36,
+                    "color": "",
+                    "proveedor": "",
+                    "cantidad": 15
+                },
+                "Correa Chica con Puntos": {
+                    "descripcion": "",
+                    "precio": 140,
+                    "color": "",
+                    "proveedor": "",
+                    "cantidad": 15
+                },
+                "Collar Gato Elastico 28 Cm": {
+                    "descripcion": "",
+                    "precio": 40,
+                    "color": "",
+                    "proveedor": "",
+                    "cantidad": 15
+                },
+                "Correa Chica": {
+                    "descripcion": "",
+                    "precio": 199,
+                    "color": "",
+                    "proveedor": "",
+                    "cantidad": 15
+                },
+                "Plato para Mascota Gato": {
+                    "descripcion": "",
+                    "precio": 466,
+                    "color": "",
+                    "proveedor": "",
+                    "cantidad": 15
+                }
+            },
             "Carnazas": {
                 "Carnaza Natural de Res para Perro Cilindro 25 pz": {
                     "descripcion": "",
@@ -326,6 +326,7 @@
                     "cantidad": 15
                 }
             },
+            "Bruh the fucks wrnog with me": {},
             "Alimento Seco": {
                 "Alimento para Perro Adulto Raza Mediana y Grande con Pollo y Granos 10 kg": {
                     "descripcion": "",
@@ -16858,7 +16859,7 @@
                     "precio": 18.5,
                     "color": "",
                     "proveedor": "",
-                    "cantidad": 15
+                    "cantidad": 12
                 }
             },
             "Fruta Cortada": {
@@ -54026,13 +54027,6 @@
     "Vinos, Licores Y Cervezas": {
         "Vinos": {
             "Chilenos": {
-                "Vino Tinto 8km Merlot 750 Ml": {
-                    "descripcion": "",
-                    "precio": 159,
-                    "color": "",
-                    "proveedor": "SANTA RITA",
-                    "cantidad": 15
-                },
                 "Vino Tinto 8km Reserva Sauvignon Blanc 750 Ml": {
                     "descripcion": "",
                     "precio": 230,
@@ -54130,6 +54124,13 @@
                     "color": "",
                     "proveedor": "SANTA RITA",
                     "cantidad": 15
+                },
+                "Vino Tinto 8km Merlot 800 Ml": {
+                    "descripcion": "",
+                    "precio": 170,
+                    "color": "",
+                    "proveedor": "SANTA RITA",
+                    "cantidad": 16
                 },
                 "Vino Blanco Santa Rita Sauvignon 187 ml": {
                     "descripcion": "",

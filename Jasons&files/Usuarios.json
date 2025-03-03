@@ -1,11 +1,11 @@
 {
     "Bucke": {
         "password": "hA73(@*74761dj",
-        "saldo": 325
+        "saldo": 269.5
     },
-    "Wong": {
-        "password": "Dupar",
-        "saldo": 288
+    "Fong": {
+        "password": "Song",
+        "saldo": 0
     },
     "Admin": {
         "password": "89yg89378#OIJ30Qa",
@@ -17,14 +17,6 @@
     },
     "nvidia": {
         "password": "Nvidia5090-",
-        "saldo": 0
-    },
-    "Boliche": {
-        "password": "AAid9832#kdwfel",
-        "saldo": 0
-    },
-    "Bonks": {
-        "password": "jJS&%2kdsahfi",
         "saldo": 0
     }
 }
