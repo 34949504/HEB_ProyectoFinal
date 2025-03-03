@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'  // Add Shadow plugin
 }
 
 group = 'com.yourpackage'
@@ -10,20 +12,27 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.commons:commons-lang3:3.12.0'  // example dependency
-    implementation 'org.json:json:20210307' // JSON dependency
-    implementation group: 'com.opencsv', name: 'opencsv', version: '5.10'
-    implementation group: 'de.vandermeer', name: 'asciitable', version: '0.3.2'
-
-
-
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.json:json:20210307'
+    implementation 'com.opencsv:opencsv:5.10'
+    implementation 'de.vandermeer:asciitable:0.3.2'
 }
 
-test {
-    useJUnitPlatform()
+application {
+    mainClass = 'Main'  // Replace with your actual main class
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'Main'  // Ensure the correct class is set
+        )
+    }
 }
 
+// Shadow JAR task
+tasks.named('shadowJar') {
+    archiveBaseName.set('HEB_ProyectoFinal')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
