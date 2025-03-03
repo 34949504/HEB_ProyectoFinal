@@ -24,10 +24,16 @@ public class BundleUsuarioCarrito {
     public boolean adminPowers;
     public float dineroActual;
 
+    public String email;
+    public String account_password;
+
+    public int total_compras;
+
+
 
 
     public BundleUsuarioCarrito(List<String> carritoLista, List<Integer> cantidadLista,List<Float> precioLista,int length,float total,
-                                String usuarioAccount,boolean adminPowers,float dineroActual) {
+                                String usuarioAccount,boolean adminPowers,float dineroActual, String email,String account_password,int total_compras) {
         this.carritoLista = carritoLista;
         this.cantidadLista = cantidadLista;
         this.precioLista = precioLista;
@@ -36,7 +42,59 @@ public class BundleUsuarioCarrito {
         this.usuarioAccount = usuarioAccount;
         this.adminPowers = adminPowers;
         this.dineroActual = dineroActual;
+        this.email = email;
+        this.account_password = account_password;
+        this.total_compras = total_compras;
 
 
+    }
+
+
+    public String getUsuarioAccount() {
+        return usuarioAccount;
+    }
+
+    public void setUsuarioAccount(String usuarioAccount) {
+        this.usuarioAccount = usuarioAccount;
+    }
+
+    public boolean isAdminPowers() {
+        return adminPowers;
+    }
+
+    public void setAdminPowers(boolean adminPowers) {
+        this.adminPowers = adminPowers;
+    }
+
+    public float getDineroActual() {
+        return dineroActual;
+    }
+
+    public void setDineroActual(float dineroActual) {
+        this.dineroActual = dineroActual;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContraseña() {
+        return this.account_password;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.account_password = contraseña;
+    }
+
+    public int getCompras() {
+        return total_compras;
+    }
+
+    public void setCompras(int compras) {
+        this.total_compras = compras;
     }
 }

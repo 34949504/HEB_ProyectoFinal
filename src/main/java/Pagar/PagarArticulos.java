@@ -56,7 +56,10 @@ public class PagarArticulos
             }
 
             JSONObject usuarioData = usuariosJson.getJSONObject(bundleUser.usuarioAccount);
-            usuarioData.put("saldo", bundleUser.dineroActual);
+
+            updating_user_info_in_the_json(bundleUser,usuarioData);
+
+
 
             fileFuncs.writeFile(usuariosJson.toString(4), "Jasons&files/Usuarios.json");
 
@@ -101,6 +104,21 @@ public class PagarArticulos
         bundleProducts.howManyInStock.clear();
         bundleUser.length = 0;
         bundleUser.total = 0;
+
+    }
+
+    private void updating_user_info_in_the_json(BundleUsuarioCarrito bundleUser,JSONObject usuarioOBJ)
+    {
+
+        bundleUser.total_compras += 1;
+        System.out.println(bundleUser.total_compras);
+
+        usuarioOBJ.remove("comprar_total");
+
+
+        usuarioOBJ.put("compras_total",bundleUser.total_compras);
+        usuarioOBJ.put("saldo", bundleUser.dineroActual);
+
 
     }
 }

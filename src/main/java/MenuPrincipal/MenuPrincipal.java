@@ -29,19 +29,14 @@ public class MenuPrincipal {
 
 
 
-    public int  menu()
+    public int menu(List<String> carrito,
+                    List<Integer> cantidad, List<Float> precio, List<String> paths,
+                    List<Integer> stock,BundleUsuarioCarrito bundle_usuario,BundleProductosCarritos bundle_carritos,
+                    ActiveBundleWrap activeBundleWrap)
     {
-        boolean active = true;
-        List<String> carrito = new ArrayList<String>();
-        List<Integer> cantidad = new ArrayList<Integer>();
-        List<Float> precio = new ArrayList<Float>();
-        List<String> paths = new ArrayList<String>();
-        List<Integer> stock = new ArrayList<Integer>();
 
 
-        BundleUsuarioCarrito bundle_usuario = new BundleUsuarioCarrito(carrito, cantidad,precio,0,0,"",false,0);
-        BundleProductosCarritos bundle_carritos = new BundleProductosCarritos(paths,stock);
-        ActiveBundleWrap activeBundleWrap = new ActiveBundleWrap();
+
         Menu_Login_o_Crear_Cuenta menuLoginOCrearCuenta = new Menu_Login_o_Crear_Cuenta();
 
 

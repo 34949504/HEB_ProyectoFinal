@@ -46,7 +46,6 @@ public class AgregarSaldo {
 
             fileFuncs.writeFile(json.toString(4),"Jasons&files/Usuarios.json");
 
-            System.out.println("Se ha agregado "+cantidad +" a su cuenta");
 
         }
 

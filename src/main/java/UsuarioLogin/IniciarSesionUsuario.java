@@ -93,14 +93,34 @@ public class IniciarSesionUsuario {
         helperFuncs.clearScreen();
         System.out.println("Inicio de sesión exitoso! Redirigiendo al menú principal...");
 
-        // Si el usuario tiene el formato nuevo, asignamos saldo. Si no, dejamos el saldo en 0.
-        if (json.getJSONObject(nombreUsuario).has("saldo")) {
-            bundleUser.dineroActual = json.getJSONObject(nombreUsuario).getFloat("saldo");
-        } else {
-            bundleUser.dineroActual = 0;
-        }
+        JSONObject userShit = json.getJSONObject(nombreUsuario);
+
+        float saldo = userShit.getFloat("saldo");
+        String email = userShit.getString("email");
+        int comprasTotal = userShit.getInt("compras_total");
+
+
+
+        bundleUser.dineroActual = saldo;
+        bundleUser.email = email;
+        bundleUser.total_compras = comprasTotal;
         bundleUser.usuarioAccount = nombreUsuario;
+        bundleUser.account_password = contrasena;
+
+
+
+//
+//        // Si el usuario tiene el formato nuevo, asignamos saldo. Si no, dejamos el saldo en 0.
+//        if (json.getJSONObject(nombreUsuario).has("saldo")) {
+//            bundleUser.dineroActual = json.getJSONObject(nombreUsuario).getFloat("saldo");
+//        } else {
+//            bundleUser.dineroActual = 0;
+//        }
+//        bundleUser.usuarioAccount = nombreUsuario;
 
         return 0; // Dejamos que el programa redirija automáticamente
     }
+
+
+
 }

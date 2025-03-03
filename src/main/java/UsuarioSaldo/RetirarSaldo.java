@@ -54,7 +54,6 @@ public class RetirarSaldo {
 
             fileFuncs.writeFile(json.toString(4),"Jasons&files/Usuarios.json");
 
-            System.out.println("Se ha retirado "+bubbles +" a su cuenta");
 
         }
 

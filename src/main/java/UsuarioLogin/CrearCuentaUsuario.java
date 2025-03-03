@@ -53,11 +53,14 @@ public class CrearCuentaUsuario {
         JSONObject userData = new JSONObject();
         userData.put("password", contrasena);
         userData.put("saldo", 0); // Se puede cambiar el saldo inicial si es necesario
+        userData.put("email","");
+        userData.put("compras_total",0);
 
         json.put(nombreUsuario, userData);
 
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(json.toString(4));
+            helperFuncs.clearScreen();
             System.out.println("Cuenta creada exitosamente!");
             return 1;
         } catch (IOException e) {

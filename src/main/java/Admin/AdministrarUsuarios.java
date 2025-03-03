@@ -55,6 +55,10 @@ public class AdministrarUsuarios {
                 String passwd = pointer.getString("password");
                 float saldo = pointer.getFloat("saldo");
 
+                String email = pointer.getString("email");
+                int compras_total = pointer.getInt("compras_total");
+
+
                 while (true)
                 {
 
@@ -75,6 +79,9 @@ public class AdministrarUsuarios {
                         JSONObject nuevo = new JSONObject();
                         nuevo.put("saldo",saldo);
                         nuevo.put("password",passwd);
+                        nuevo.put("email",email);
+                        nuevo.put("compras_total",compras_total);
+
 
 
 
@@ -98,6 +105,8 @@ public class AdministrarUsuarios {
                         JSONObject nuevo = new JSONObject();
                         nuevo.put("saldo",saldo);
                         nuevo.put("password",passwd);
+                        nuevo.put("email",email);
+                        nuevo.put("compras_total",compras_total);
 
                         json.remove(usersList.get(index)); // Quitar antiguo
                         json.put(name,nuevo);
