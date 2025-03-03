@@ -19,12 +19,11 @@ public class ConfigMenu {
         boolean activo = true;
 
         while (activo) {
-            System.out.println("\nConfiguración de Cuenta");
             System.out.println("1. Modificar nombre de usuario");
             System.out.println("2. Cambiar contraseña");
             System.out.println("3. Consultar información de usuario");
-            System.out.println("4. Regresar al menú principal");
-            System.out.print("Selecciona una opción: ");
+            System.out.println("4. Modificar correo electrónico");
+            System.out.println("5. Regresar al menú principal");
 
             String opcion = scanner.nextLine();
 
@@ -39,6 +38,9 @@ public class ConfigMenu {
                     consultarInformacionUsuario(bundleUser);
                     break;
                 case "4":
+                    cambiarCorreo(bundleUser);
+                    break;
+                case "5":
                     activo = false;
                     break;
                 default:
@@ -129,6 +131,41 @@ public class ConfigMenu {
             System.out.println("Contraseña cambiada exitosamente.");
         } catch (IOException e) {
             System.out.println("Error crítico al escribir en el archivo: " + e.getMessage());
+        }
+    }
+
+    private void cambiarCorreo(BundleUsuarioCarrito bundleUser) {
+        File file = fileFuncs.checkIfFileExists("Jasons&files/Usuarios.json");
+        StringBuilder string = fileFuncs.readFile(file);
+        JSONObject json = new JSONObject(string.toString());
+
+        String usuario = bundleUser.getUsuarioAccount();
+
+        if (!json.has(usuario)) {
+            System.out.println("❌ Error: Usuario no encontrado en la base de datos.");
+            return;
+        }
+
+        System.out.print("Introduce tu nuevo correo electrónico: ");
+        String nuevoCorreo = scanner.nextLine().trim();
+
+        if (!nuevoCorreo.contains("@") || !nuevoCorreo.contains(".")) {
+            System.out.println("❌ Error: Ingresa un correo válido.");
+            return;
+        }
+
+        // Actualizar en la base de datos
+        json.getJSONObject(usuario).put("email", nuevoCorreo);
+
+        // Guardar en el archivo
+        System.out.println("📂 Intentando escribir en: " + file.getAbsolutePath());
+        System.out.println("📄 Nuevo contenido del JSON:\n" + json.toString(4));
+
+        if (fileFuncs.writeFile(file.getAbsolutePath(), json.toString(4))) {
+            bundleUser.setEmail(nuevoCorreo); // Actualizar en memoria
+            System.out.println("✅ Correo electrónico actualizado correctamente.");
+        } else {
+            System.out.println("❌ Error: No se pudo actualizar el correo en el archivo.");
         }
     }
 
